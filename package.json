@@ -1,0 +1,19 @@
+{
+  "name": "nodekick",
+  "version": "0.0.0",
+  "decription": "multiplayer fighting game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amirrajan/nodekick.git"
+  },
+  "dependencies" : {
+    "express": "x",
+    "ejs": "x",
+  },
+  "subdomain": "nodekick",
+  "engines": { "node": "0.10.x" }
+}
