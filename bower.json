@@ -1,0 +1,7 @@
+{
+  "name": "nodekick",
+  "dependencies": {
+    "jquery": "x"
+  },
+  "version": "0.0.0"
+}
