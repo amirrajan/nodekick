@@ -8,6 +8,7 @@
 
     app.assets.init();
     app.drawer.init();
+    app.game.init();
     drawLoop();
   }
 

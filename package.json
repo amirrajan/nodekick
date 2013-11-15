@@ -13,6 +13,7 @@
   "dependencies" : {
     "express": "x",
     "ejs": "x",
+    "socket.io": "x"
   },
   "subdomain": "nodekick",
   "engines": { "node": "0.10.x" }
