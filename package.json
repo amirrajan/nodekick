@@ -13,7 +13,8 @@
   "dependencies" : {
     "express": "x",
     "ejs": "x",
-    "socket.io": "x"
+    "socket.io": "x",
+    "underscore": "x"
   },
   "subdomain": "nodekick",
   "engines": { "node": "0.10.x" }
