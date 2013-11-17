@@ -1,21 +1,24 @@
 (function() {
-  var sprites = app.assets.sprites;
+  var game = null;
+  var sprites = null;
   var c, canvas = null;
+  var stageHeight = 450;
 
   function init() {
+    game = app.game;
+    sprites = app.assets.sprites;
     canvas = window.document.getElementById('stage');
     c = canvas.getContext('2d');
   }
 
   function draw() {
-    drawPlayer();
+    drawPlayers();
   }
 
-  function drawPlayer() {
-    var x = 500;
-    var y = 500;
-    var sprite = sprites.box;
-    c.drawImage(sprite, x, y)
+  function drawPlayers() {
+    _.each(game.players(), function(player) {
+      c.drawImage(sprites.box, player.x, player.y + stageHeight)
+    });
   }
 
   app.drawer = { };

@@ -1,5 +1,6 @@
 (function() {
   function init() {
+    app.game.init();
     app.gamePad.init({
       up: app.game.jump,
       left: app.game.attackLeft,
@@ -8,7 +9,6 @@
 
     app.assets.init();
     app.drawer.init();
-    app.game.init();
     drawLoop();
   }
 

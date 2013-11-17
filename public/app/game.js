@@ -2,6 +2,7 @@
   var clock = 0;
   var socket = null;
   var id = null;
+  var gameState = { players: [] };
 
   function jump() {
     $.post("/jump", { playerId: id });
@@ -29,8 +30,8 @@
   function init() {
     id = guid();
     socket = io.connect('/');
-    socket.on('gamestate', function(gameState) {
-      console.log(gameState);
+    socket.on('gamestate', function(state) {
+      gameState = state;
     });
   }
 
@@ -40,4 +41,5 @@
   app.game.attackLeft = attackLeft;
   app.game.attackRight = attackRight;
   app.game.clock = function() { return clock; }
+  app.game.players = function() { return gameState.players; }
 })();
