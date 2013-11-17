@@ -15,4 +15,15 @@ describe('jumping', function() {
     game.jump("player1");
     expect(game.players().length).toBe(1);
   });
+
+  it("velocity is set", function() {
+    game.jump("player1");
+    expect(game.getPlayer("player1").velocity).toBe(game.jumpPower);
+  });
+
+  it("player's y position changes after jump", function() {
+    game.jump("player1");
+    game.tick();
+    expect(game.getPlayer("player1").y).toBeLessThan(0);
+  });
 });

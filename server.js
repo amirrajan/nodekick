@@ -22,11 +22,12 @@ app.post('/jump', function(req, res) {
 
 server.listen(process.env.PORT || config.port);
 
-var framesPerSecondInMilliseconds = 1000.0 / 1.0;
+var fps = game.fps;
+var framesPerSecondInMilliseconds = 1000.0 / fps;
 setInterval(function() {
   game.tick();
   io.sockets.emit('gamestate', {
-    clock: game.clock(),
+    frame: game.frame(),
     players: game.players()
   });
 }, framesPerSecondInMilliseconds);
