@@ -20,6 +20,16 @@ app.post('/jump', function(req, res) {
   res.end();
 });
 
+app.post('/left', function(req, res) {
+  game.left(req.body.playerId);
+  res.end();
+});
+
+app.post('/right', function(req, res) {
+  game.right(req.body.playerId);
+  res.end();
+});
+
 server.listen(process.env.PORT || config.port);
 
 var fps = game.fps;
