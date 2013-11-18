@@ -22,7 +22,7 @@
     _.each(game.players(), function(player) {
       var sprite = spriteFor(player);
       c.drawImage(sprite.image, sprite.x, sprite.y);
-      //c.fillRect(player.x, player.y + stageHeight, 1, 1); 
+      //c.fillRect(player.x, player.y + stageHeight, 10, 10); 
     });
   }
 
