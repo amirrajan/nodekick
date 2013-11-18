@@ -18,7 +18,7 @@
 
   function drawPlayers() {
     _.each(game.players(), function(player) {
-      c.drawImage(sprites.box, player.x, player.y + stageHeight)
+      c.drawImage(sprites.dive[player.state], player.x, player.y + stageHeight)
     });
   }
 
