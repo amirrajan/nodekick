@@ -3,8 +3,6 @@
   var sprites = null;
   var c, canvas = null;
   var stageHeight = 500;
-  var playerHeight = 150;
-  var playerHalfWidth = 75.0/2.0;
 
   function init() {
     game = app.game;
@@ -20,7 +18,7 @@
 
   function drawPlayers() {
     _.each(game.players(), function(player) {
-      drawHitBox(player);
+      //drawHitBox(player);
       var sprite = spriteFor(player);
       c.drawImage(sprite.image, sprite.x, sprite.y);
     });
@@ -44,8 +42,8 @@
   function spriteFor(player) {
     return {
       image: sprites.dive[player.direction][player.state],
-      x: player.x - playerHalfWidth,
-      y: (player.y + stageHeight) - playerHeight
+      x: player.x - game.boxes().playerCenter,
+      y: (player.y + stageHeight) - game.boxes().playerHeight
     };
   }
 

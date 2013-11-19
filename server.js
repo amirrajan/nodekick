@@ -40,6 +40,6 @@ setInterval(function() {
   io.sockets.emit('gamestate', {
     frame: game.frame(),
     players: game.players(),
-    boxes: game.boxes()
+    boxes: game.boxes(),
   });
 }, framesPerSecondInMilliseconds);
