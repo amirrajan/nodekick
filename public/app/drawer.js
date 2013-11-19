@@ -19,8 +19,10 @@
   function drawPlayers() {
     _.each(game.players(), function(player) {
       //drawHitBox(player);
-      var sprite = spriteFor(player);
-      c.drawImage(sprite.image, sprite.x, sprite.y);
+      if(player.state != "dying") {
+        var sprite = spriteFor(player);
+        c.drawImage(sprite.image, sprite.x, sprite.y);
+      }
     });
   }
 
