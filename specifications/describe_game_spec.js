@@ -53,6 +53,22 @@ describe('stage boundaries', function() {
     expect(player.state).toBe("dying");
   });
 
+  it("player is removed after death count", function() {
+    var player = game.addPlayer("player1");
+    player.state = "kicking";
+    player.direction = -1;
+    player.y = -1000;
+    player.x = 0;
+    game.tick();
+
+    var countdown = player.deathCountdown;
+    for(var i = 0; i < countdown; i++) {
+      game.tick();
+    }
+
+    expect(game.players().length).toBe(0);
+  });
+
   it("player is set to dying if the stage's right boundary is hit", function() {
     var player = game.addPlayer("player1");
     player.state = "kicking";
@@ -66,6 +82,5 @@ describe('stage boundaries', function() {
     }
 
     expect(player.state).toBe("dying");
-    expect(game.players().length).toBe(0);
   });
 });
