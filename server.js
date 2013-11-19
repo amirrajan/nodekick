@@ -15,8 +15,8 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.post('/jump', function(req, res) {
-  game.jump(req.body.playerId);
+app.post('/up', function(req, res) {
+  game.up(req.body.playerId);
   res.end();
 });
 

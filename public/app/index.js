@@ -2,9 +2,9 @@
   function init() {
     app.game.init();
     app.gamePad.init({
-      up: app.game.jump,
-      left: app.game.attackLeft,
-      right: app.game.attackRight
+      up: app.game.up,
+      left: app.game.left,
+      right: app.game.right
     });
 
     app.assets.init();
