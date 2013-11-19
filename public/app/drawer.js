@@ -20,7 +20,6 @@
   }
 
   function drawPlayers() {
-    console.log(game.players());
     _.each(game.players(), function(player) {
       //drawHitBox(player);
       var sprite = spriteFor(player);
