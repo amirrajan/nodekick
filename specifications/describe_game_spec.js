@@ -34,7 +34,6 @@ describe('jumping', function() {
   });
 });
 
-
 describe('stage boundaries', function() {
   beforeEach(function() { game.reset(); });
 
@@ -82,5 +81,27 @@ describe('stage boundaries', function() {
     }
 
     expect(player.state).toBe("dying");
+  });
+});
+
+describe('hit boxes', function() {
+  it('kills player', function() {
+    var attacker = game.addPlayer("attacker");
+    attacker.x = 500;
+    attacker.y = -100;
+    attacker.direction = -1;
+    attacker.state = "kicking";
+
+    var victim = game.addPlayer("victim");
+    victim.x = 450;
+    victim.y = 0;
+    victim.direction = -1;
+    victim.state = "standing";
+
+    var foot = attacker.foot(game.boxes());
+    var bodyParts = victim.boxes(game.boxes());
+    game.tick();
+    expect(victim.state).toBe('dying');
+    expect(attacker.state).toBe('kicking');
   });
 });
