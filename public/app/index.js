@@ -9,6 +9,7 @@
     });
 
     app.assets.init();
+    app.deathAnimation.init();
     app.drawer.init();
     drawLoop();
     setInterval(function() {
@@ -37,6 +38,7 @@
   function drawLoop() {
     window.requestAnimationFrame(drawLoop);
     app.drawer.draw();
+    app.deathAnimation.draw();
   }
 
   $(init);
