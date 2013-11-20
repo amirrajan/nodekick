@@ -1,49 +1,54 @@
 (function() {
   var game = null;
-  var sprites = null;
-  var c, canvas, deathCanvas, deathContext = null;
   var stageHeight = 500;
-  var dyingPlayers = { };
+  var stage, renderer = null;
+  var sprites = { };
 
   function init() {
+    stage = new PIXI.Stage(0xFFFFFF);
+    renderer = PIXI.autoDetectRenderer(1280, 500);
+    
+    $("#stage").append(renderer.view);
+    //document.body.appendChild(renderer.view);
     game = app.game;
-    sprites = app.assets.sprites;
-    canvas = window.document.getElementById('stage');
-    c = canvas.getContext('2d');
-    deathCanvas = window.document.getElementById('deathCanvas');
-    deathContext = deathCanvas.getContext('2d');
+    requestAnimFrame(draw);
+  }
+
+  function playerSprite(player) {
+    var sprite = sprites[player.id];
+    if(!sprite) {
+      sprite = new PIXI.Sprite(playerTexture(player));
+      sprite.anchor.x = 0.5;
+      sprite.anchor.y = 1;
+      stage.addChild(sprite);
+      sprites[player.id] = sprite;
+    }
+
+    return sprite;
   }
 
   function draw() {
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayers();
-  }
+    requestAnimFrame(draw);
 
-  function drawPlayers() {
     _.each(game.players(), function(player) {
-      var sprite = spriteFor(player);
+      var sprite = playerSprite(player);
+
+      sprite.setTexture(playerTexture(player));
+      sprite.position.x = player.x;
+      sprite.position.y = player.y + stageHeight;
+
       if(player.state == "dying") {
-        app.deathAnimation.animate(player, sprite.image, sprite.x, sprite.y);
-      }
-      else {
-        c.drawImage(sprite.image, sprite.x, sprite.y);
+        sprite.alpha = player.deathCountdown / 60.0;
+      } else {
+        sprite.alpha = 1;
       }
     });
-  }
 
-  function drawHitBox(player) {
-    c.fillRect(player.x, player.y + stageHeight, 2, 2); 
-    _.each(game.boxes()[player.direction][playerState(player)], function(box) {
-      drawBox(player, box);
-    });
+    renderer.render(stage);
   }
-
-  function drawBox(player, box) {
-    c.fillRect(
-      (player.x + box.x),
-      (player.y + box.y) + stageHeight,
-      Math.abs(box.x2 - box.x),
-      Math.abs(box.y2 - box.y));
+  
+  function playerTexture(player) {
+    return app.assets.sprites.dive[player.direction][playerState(player)];
   }
 
   function playerState(player) {
@@ -52,22 +57,6 @@
     return player.state;
   }
 
-  function playerLocation(player) {
-    return {
-      x: player.x - game.boxes().playerCenter,
-      y: (player.y + stageHeight) - game.boxes().playerHeight
-    };
-  }
-
-  function spriteFor(player) {
-    var state = playerState(player);
-    var loc = playerLocation(player);
-    var image = sprites.dive[player.direction][state];
-
-    return { image: image, x: loc.x, y: loc.y };
-  }
-
   app.drawer = { };
   app.drawer.init = init;
-  app.drawer.draw = draw;
 })();

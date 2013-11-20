@@ -5,6 +5,7 @@
     <title>nodekick</title>
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/pixi/bin/pixi.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/app/app.js"></script>
     <script src="/public/app/assets.js"></script>
@@ -16,12 +17,10 @@
     <script src="/public/app/index.js"></script>
   </head>
   <body>
-    <div style="float: left;">
-      <canvas id='stage' style='border: solid 1px silver' width='1280' height='500'></canvas>
-      <canvas id="deathCanvas" width="75" height="150" style="display: none; border: solid 1px silver;"></canvas>
+    <div id="stage" style="border: solid 1px silver; width: 1280px">
     </div>
     <% if(ai) { %>
-    <div style="float: left; border: solid 1px silver; padding: 3px; padding-bottom: 20px;">
+    <div style="float: left; border: solid 1px silver; padding: 3px; margin-top: 10px;">
       <textarea id="ai" rows="20" cols="55" style="border: none; font-size: 16px; font-family: monospace;">
       </textarea><br/>
       <hr/>

@@ -2,7 +2,8 @@
   "name": "nodekick",
   "dependencies": {
     "jquery": "x",
-    "underscore": "x"
+    "underscore": "x",
+    "pixi": "x"
   },
   "version": "0.0.0"
 }

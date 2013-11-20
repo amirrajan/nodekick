@@ -9,16 +9,8 @@
     });
 
     app.assets.init();
-    app.deathAnimation.init();
     app.drawer.init();
     app.ai.init();
-    drawLoop();
-  }
-
-  function drawLoop() {
-    window.requestAnimationFrame(drawLoop);
-    app.drawer.draw();
-    app.deathAnimation.draw();
   }
 
   $(init);
