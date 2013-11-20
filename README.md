@@ -3,14 +3,15 @@ nodekick
 
 Multiplayer fighting game.
 
-clone repo.
+Clone repo.
 
-navigate to directory.
+Navigate to directory.
 
     sudo npm install
     sudo npm install -g bower
     bower install
     node server.js
 
-navigate to http://localhost:3000/ to play
-navigate to http://localhost:3000/ai for a programmable AI
+Navigate to http://localhost:3000/ to play
+
+Navigate to http://localhost:3000/ai for a programmable bot
