@@ -24,6 +24,8 @@
       if(!you) you = { state: "standing" };
 
       if(action == "up" && you.state == "standing") app.game.up();
+
+      else if(action == "down" && you.state == "standing") app.game.down();
           
       else if(action == "left") app.game.left();
 
