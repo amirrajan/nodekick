@@ -3,7 +3,8 @@
   var methodMap = {
     "37": "left",
     "38": "up",
-    "39": "right"
+    "39": "right",
+    "40": "down"
   };
 
   function init(methods) {

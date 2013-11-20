@@ -16,6 +16,10 @@
     $.post("/right", { playerId: playerId });
   }
 
+  function down() {
+    $.post("/down", { playerId: playerId });
+  }
+
   function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -39,6 +43,7 @@
   app.game.playerId = function() { return playerId; };
   app.game.init = init;
   app.game.up = up;
+  app.game.down = down;
   app.game.left = left;
   app.game.right = right;
   app.game.clock = function() { return clock; };

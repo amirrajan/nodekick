@@ -4,7 +4,8 @@
     app.gamePad.init({
       up: app.game.up,
       left: app.game.left,
-      right: app.game.right
+      right: app.game.right,
+      down: app.game.down
     });
 
     app.assets.init();
