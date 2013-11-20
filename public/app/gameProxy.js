@@ -1,19 +1,19 @@
 (function() {
   var clock = 0;
   var socket = null;
-  var id = null;
+  var playerId = null;
   var gameState = { players: [] };
 
   function up() {
-    $.post("/up", { playerId: id });
+    $.post("/up", { playerId: playerId });
   }
 
   function left() {
-    $.post("/left", { playerId: id });
+    $.post("/left", { playerId: playerId });
   }
 
   function right() {
-    $.post("/right", { playerId: id });
+    $.post("/right", { playerId: playerId });
   }
 
   function guid() {
@@ -28,7 +28,7 @@
   }
 
   function init() {
-    id = guid();
+    playerId = guid();
     socket = io.connect('/');
     socket.on('gamestate', function(state) {
       gameState = state;
@@ -36,6 +36,7 @@
   }
 
   app.game = { };
+  app.game.playerId = function() { return playerId; };
   app.game.init = init;
   app.game.up = up;
   app.game.left = left;
