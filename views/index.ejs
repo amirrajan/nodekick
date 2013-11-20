@@ -14,12 +14,14 @@
     <script src="/public/app/index.js"></script>
   </head>
   <body>
+    <% if(ai) { %>
     <div style="float: left; border: solid 1px silver; padding: 3px; padding-bottom: 33px;">
       <textarea id="ai" rows="35" cols="55" style="border: none; font-size: 16px; font-family: monospace;">
       </textarea><br/>
       <input type="button" id="loadScript" value="start bot" />
       <input type="button" id="loadDefault" value="load default script" />
     </div>
+    <% } %>
     <div style="float: left;">
       <canvas id='stage' style='border: solid 1px silver' width='1280' height='700'></canvas>
       <canvas id="deathCanvas" width="75" height="150" style="display: none; border: solid 1px silver;"></canvas>

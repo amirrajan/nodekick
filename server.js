@@ -12,7 +12,11 @@ app.use('/public', express.static('public'));
 app.use(express.bodyParser());
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', { ai: false });
+});
+
+app.get('/ai', function(req, res) {
+  res.render('index', { ai: true });
 });
 
 app.post('/up', function(req, res) {
