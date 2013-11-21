@@ -10,6 +10,9 @@
     
     $("#stage").append(renderer.view);
     game = app.game;
+  }
+
+  function startDrawing() {
     requestAnimFrame(draw);
   }
 
@@ -23,13 +26,16 @@
 
   function draw() {
     requestAnimFrame(draw);
-
+  
     _.each(game.players(), addPlayerSprite);
     _.each(sprites, function(sprite) { sprite.draw(); });
+    app.deathAnimations.draw();
 
     renderer.render(stage);
   }
 
   app.drawer = { };
   app.drawer.init = init;
+  app.drawer.stage = function() { return stage; };
+  app.drawer.startDrawing = startDrawing;
 })();

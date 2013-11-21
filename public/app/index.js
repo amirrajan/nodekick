@@ -10,7 +10,9 @@
 
     app.assets.init();
     app.drawer.init();
+    app.deathAnimations.init();
     app.ai.init();
+    app.drawer.startDrawing();
   }
 
   $(init);
