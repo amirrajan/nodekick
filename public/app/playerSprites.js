@@ -1,5 +1,11 @@
 (function() {
   var stageHeight = 500;
+  var stage;
+  var sprites = { };
+
+  function init() {
+    stage = app.drawer.stage();
+  }
 
   function playerTexture(playerId) {
     var player = app.game.getPlayer(playerId);
@@ -9,6 +15,19 @@
   function playerState(player) {
     if(player.state == "dying") return player.deathState;
     return player.state;
+  }
+
+  function add(player) {
+    if(sprites[player.id]) return;
+
+    var playerSprite = new PlayerSprite(player.id);
+    sprites[player.id] = playerSprite;
+    stage.addChild(playerSprite.sprite);
+  }
+
+  function draw(players) {
+    _.each(players, app.playerSprites.add);
+    _.each(sprites, function(sprite) { sprite.draw(); });
   }
 
   function PlayerSprite(playerId) {
@@ -40,5 +59,8 @@
     };
   }
 
-  app.PlayerSprite = PlayerSprite; 
+  app.playerSprites = { }
+  app.playerSprites.init = init;
+  app.playerSprites.draw = draw;
+  app.playerSprites.add = add;
 })();

@@ -16,19 +16,10 @@
     requestAnimFrame(draw);
   }
 
-  function addPlayerSprite(player) {
-    if(sprites[player.id]) return;
-
-    var playerSprite = new app.PlayerSprite(player.id);
-    sprites[player.id] = playerSprite;
-    stage.addChild(playerSprite.sprite);
-  }
-
   function draw() {
     requestAnimFrame(draw);
   
-    _.each(game.players(), addPlayerSprite);
-    _.each(sprites, function(sprite) { sprite.draw(); });
+    app.playerSprites.draw(game.players());
     app.deathAnimations.draw();
 
     renderer.render(stage);

@@ -11,6 +11,7 @@
     app.assets.init();
     app.drawer.init();
     app.deathAnimations.init();
+    app.playerSprites.init();
     app.ai.init();
     app.drawer.startDrawing();
   }
