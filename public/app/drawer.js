@@ -14,14 +14,16 @@
 
   function startDrawing() {
     requestAnimFrame(draw);
+    setInterval(calc, 17);
+  }
+
+  function calc() {
+    app.playerSprites.tick(game.players());
+    app.deathAnimations.tick();
   }
 
   function draw() {
     requestAnimFrame(draw);
-  
-    app.playerSprites.draw(game.players());
-    app.deathAnimations.draw();
-
     renderer.render(stage);
   }
 

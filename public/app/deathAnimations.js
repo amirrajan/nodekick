@@ -1,8 +1,8 @@
 (function() {
   var deathQueue = [ ];
-  var maxDeathCountdown = 60.0;
+  var maxDeathCountdown = 60;
   var stage;
-  var gravity = 1;
+  var gravity = 1.0;
 
 
   function init() {
@@ -13,8 +13,8 @@
     var results = [ ];
     var width = texture.frame.width;
     var height = texture.frame.height;
-    var rows = 20;
-    var columns = 20;
+    var rows = 15;
+    var columns = 15;
     var deltaX = width / columns;
     var deltaY = height / rows;
     _.times(rows, function(row) {
@@ -29,8 +29,8 @@
         results.push({
           sprite: sprite,
           dy: _.random(-20, 0),
-          dx: _.random(-20, 20),
-          rotation: Math.random()
+          dx: _.random(-10, 10),
+          rotation: Math.random() / 2
         });
       });
     });
@@ -50,7 +50,7 @@
     _.each(animation.pieces, function(piece) { stage.addChild(piece.sprite); });
   }
 
-  function draw() {
+  function tick() {
     _.each(deathQueue, function(death) {
       _.each(death.pieces, function(piece) {
         piece.sprite.alpha = death.deathCountdown / maxDeathCountdown;
@@ -76,7 +76,7 @@
   app.deathAnimations = { };
   app.deathAnimations.init = init;
   app.deathAnimations.queue = queue;
-  app.deathAnimations.draw = draw;
+  app.deathAnimations.tick = tick;
 })();
 
 

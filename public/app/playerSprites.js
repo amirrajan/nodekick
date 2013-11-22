@@ -25,9 +25,9 @@
     stage.addChild(playerSprite.sprite);
   }
 
-  function draw(players) {
+  function tick(players) {
     _.each(players, app.playerSprites.add);
-    _.each(sprites, function(sprite) { sprite.draw(); });
+    _.each(sprites, function(sprite) { sprite.tick(); });
   }
 
   function PlayerSprite(playerId) {
@@ -36,7 +36,7 @@
     this.sprite.anchor.x = 0.5;
     this.sprite.anchor.y = 1;
     this.dead = false;
-    this.draw = function() {
+    this.tick = function() {
       var player = app.game.getPlayer(this.id);
       this.sprite.alpha = 0;
 
@@ -61,6 +61,6 @@
 
   app.playerSprites = { }
   app.playerSprites.init = init;
-  app.playerSprites.draw = draw;
+  app.playerSprites.tick = tick;
   app.playerSprites.add = add;
 })();
