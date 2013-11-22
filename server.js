@@ -26,6 +26,7 @@ io.set('log level', 0);
 app.set('view engine', 'ejs');
 app.use('/bower_components', express.static('bower_components'));
 app.use('/public', express.static('public'));
+app.use('/common', express.static('common'));
 app.use(express.bodyParser());
 
 app.get('/', function(req, res) {
