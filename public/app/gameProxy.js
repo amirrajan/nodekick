@@ -3,6 +3,8 @@
   var socket = null;
   var playerId = null;
   var gameState = { players: [] };
+  var kickDelta = 10;
+  var gravity = 1;
 
   function up() {
     $.post("/up", { playerId: playerId });
@@ -36,6 +38,30 @@
     socket = io.connect('/');
     socket.on('gamestate', function(state) {
       gameState = state;
+      applyGravity();
+    });
+
+    setInterval(applyGravity, 1000.0 / 60.0);
+  }
+
+  function applyGravity() {
+    _.each(app.game.players(), function(player) {
+      if(player.state == "dying") return;
+      if(player.state == "jumping") {
+        player.x -= player.velocityX;
+        player.y -= player.velocityY;
+        player.velocityY -= gravity;
+      }
+
+      if(player.state == "kicking") {
+        player.y += kickDelta;
+        player.x += (kickDelta) * player.direction;
+      }
+
+      if(player.y > 0) {
+        player.y = 0;
+        player.state = "standing";
+      }
     });
   }
 
