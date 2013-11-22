@@ -23,8 +23,8 @@
   }
 
   function draw() {
-    requestAnimFrame(draw);
     renderer.render(stage);
+    requestAnimFrame(draw);
   }
 
   app.drawer = { };
