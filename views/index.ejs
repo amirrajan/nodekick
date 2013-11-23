@@ -21,6 +21,13 @@
   <body>
     <div id="stage" style="border: solid 1px silver; width: 1280px">
     </div>
+    <% if(ai) { %>
+    <div>
+      <h3>Bot (enter gist raw enter url to javascript script)</h3>
+      <input type="text" id="ai" style="width: 600px" />
+      <input type="button" id="loadScript" value="start bot" />
+    </div>
+    <% } %>
     <div>
       <h3>Instructions for multiplayer fighting game (bring your friends)</h3>
       <ul>
@@ -31,15 +38,6 @@
         <li><strong>While standing</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>change the direction you are facing</strong>.</li>
       </ul>
     </div>
-    <% if(ai) { %>
-    <div style="float: left; border: solid 1px silver; padding: 3px; margin-top: 10px;">
-      <textarea id="ai" rows="20" cols="55" style="border: none; font-size: 16px; font-family: monospace;">
-      </textarea><br/>
-      <hr/>
-      <input type="button" id="loadScript" value="start bot" />
-      <input type="button" id="loadDefault" value="load default script" />
-    </div>
-    <% } %>
     <script id="defaultAIScript" type="aiscript">
 (function() {
   function tick(you, them) {
@@ -63,27 +61,13 @@
 })();
     </script>
     <script>
-      function loadDefaultAIScript() {
-        $("#ai").val($("#defaultAIScript").html());
-      }
-      
       $(function() {
-        if(localStorage.ai) {
-          $("#ai").val(localStorage.ai);
-        } else {
-          loadDefaultAIScript();
-        }
+        $("#ai").val("https://gist.github.com/amirrajan/7609280/raw");
         
-        $("#loadDefault").click(function() {
-          loadDefaultAIScript();
-        });
-
         $("#loadScript").click(function() {
           $(".ai").remove();
-          var code = $("#ai").val();
-          localStorage.ai = code;
           var scriptToAppend = $('<script class="ai"><\/script>');
-          scriptToAppend.html(code);
+          scriptToAppend.attr('src', $("#ai").val());
           scriptToAppend.appendTo("body");
         });
       });
