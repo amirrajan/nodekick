@@ -16,7 +16,6 @@ function setBroadcast(game) {
 function broadcast(game) {
   if(game.shouldBroadcast) {
     _.each(game.sockets, function(socket) {
-      console.log("emitting game to", game.id, socket.id);
       socket.emit('gamestate', {
         frame: engine.frame(),
         players: engine.players(game),
@@ -34,7 +33,6 @@ function getGame(gameId) {
     games[gameId].id = gameId;
     games[gameId].shouldBroadcast = true;
   }
-  console.log('getting game: ', gameId);
 
   return games[gameId];
 }
@@ -48,10 +46,6 @@ app.use(express.bodyParser());
 
 app.get('/', function(req, res) {
   res.redirect('/game/public');
-});
-
-app.get('/ai', function(req, res) {
-  res.render('index', { ai: true });
 });
 
 app.post('/up', function(req, res) {
@@ -95,7 +89,6 @@ var framesPerSecondInMilliseconds = 1000.0 / fps;
 
 io.sockets.on('connection', function(socket) {
   socket.on('joinGame', function(data) {
-    console.log(data);
     getGame(data.gameId).sockets.push(socket);
   });
 });
