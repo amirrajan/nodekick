@@ -89,7 +89,9 @@ var framesPerSecondInMilliseconds = 1000.0 / fps;
 
 io.sockets.on('connection', function(socket) {
   socket.on('joinGame', function(data) {
-    getGame(data.gameId).sockets.push(socket);
+    var game = getGame(data.gameId);
+    game.sockets.push(socket);
+    setBroadcast(game);
   });
 });
 
