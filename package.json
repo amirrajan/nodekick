@@ -1,6 +1,6 @@
 {
   "name": "nodekick",
-  "version": "0.0.0-16",
+  "version": "0.0.0-17",
   "decription": "multiplayer fighting game",
   "main": "server.js",
   "scripts": {
