@@ -13,8 +13,8 @@
     var results = [ ];
     var width = texture.frame.width;
     var height = texture.frame.height;
-    var rows = 10;
-    var columns = 10;
+    var rows = 15;
+    var columns = 15;
     var deltaX = width / columns;
     var deltaY = height / rows;
     _.times(rows, function(row) {
@@ -54,10 +54,21 @@
     _.each(deathQueue, function(death) {
       _.each(death.pieces, function(piece) {
         piece.sprite.alpha = death.deathCountdown / maxDeathCountdown;
-        piece.sprite.position.x += piece.dx;
-        piece.sprite.position.y += piece.dy;
+        var dx = piece.dx;
+        var dy = piece.dy;
+        var rotation = piece.rotation;
+        var tickCount = maxDeathCountdown - death.deathCountdown;
+
+        if(tickCount > 5 && tickCount < 25) {
+          dx = dx / 10;
+          dy = dy / 10;
+          rotation = rotation / 10;
+        }
+
+        piece.sprite.position.x += dx;
+        piece.sprite.position.y += dy;
         piece.dy += gravity;
-        piece.sprite.rotation += piece.rotation;
+        piece.sprite.rotation += rotation;
       });
       death.deathCountdown -= 1;
     });
