@@ -11,6 +11,7 @@
     for(var key in methodMap) keyState[key] = "up";
 
     $(document).keydown(function(e) {
+      if(methodMap[e.keyCode]) e.preventDefault();
       if(keyState[e.keyCode] == "up") {
         keyState[e.keyCode] = "down";
         var methodToCall = methodMap[e.keyCode];

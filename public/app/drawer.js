@@ -3,16 +3,31 @@
   var stageHeight = 500;
   var stage, renderer = null;
   var sprites = { };
+  var maxWidth = 1280;
+  var maxHeight = 500;
 
   function init() {
     stage = new PIXI.Stage(0xFFFFFF);
     renderer = PIXI.autoDetectRenderer(1280, 500);
-    
+    $(window).resize(onResize);
+
     $("#stage").append(renderer.view);
     game = app.game;
   }
 
+  function onResize() {
+    var width = $("#stage").width();
+    var height = (width * maxHeight) / maxWidth;
+
+    if(width < maxWidth) {
+      $("canvas").css({ width: width, height: height });
+    } else {
+      $("canvas").css({ width: maxWidth, height: maxHeight });
+    }
+  }     
+
   function startDrawing() {
+    onResize();
     requestAnimFrame(draw);
     setInterval(calc, 17);
   }
