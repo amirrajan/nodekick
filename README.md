@@ -15,5 +15,3 @@ Navigate to directory.
     node server.js
 
 Navigate to http://localhost:3000/ to play
-
-Navigate to http://localhost:3000/ai for a programmable bot
