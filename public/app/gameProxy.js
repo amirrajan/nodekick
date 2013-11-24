@@ -4,24 +4,29 @@
   var playerId = null;
   var gameState = { players: [] };
   var gameId = _.last(window.location.href.split('/'));
+  var socket = null;
 
   function up() {
-    $.post("/up", dto());
+    socket.emit('up', session());
+    //$.post("/up", session());
   }
 
   function left() {
-    $.post("/left", dto());
+    socket.emit('left', session());
+    //$.post("/left", session());
   }
 
   function right() {
-    $.post("/right", dto());
+    socket.emit('right', session());
+    //$.post("/right", session());
   }
 
   function down() {
-    $.post("/down", dto());
+    socket.emit('down', session());
+    //$.post("/down", session());
   }
 
-  function dto() {
+  function session() {
     return { playerId: playerId, gameId: gameId };
   }
 
@@ -40,15 +45,15 @@
     playerId = guid();
     socket = io.connect('/');
     socket.on('connect', function() {
-      socket.emit('joinGame', dto());
+      socket.emit('joinGame', session());
     });
+
     socket.on('gamestate', function(state) {
       gameState = state;
       applyGravity();
     });
 
     setInterval(applyGravity, 1000.0 / 60.0);
-    console.log(dto());
   }
 
   function applyGravity() {
