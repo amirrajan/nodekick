@@ -1,4 +1,4 @@
-nodekick
+Nodekick
 ========
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License</a>.
@@ -7,7 +7,9 @@ Nodekick is a realtime, multiplayer fighting game built using NodeJS, socket.io,
 
 This codebase is a cleaned up version of what our team built for Node Knockout 2013. Out of 150 entries, we placed 15th overall and 6th in the "fun/utility" category.
 
-You can play online [here](http://nodekick.jit.su). Here are some screenshots.
+You can play online [here](http://nodekick.jit.su).
+
+#Screenshots and Instruction to deploy your own Nodekick.
 
 ##jump
 
