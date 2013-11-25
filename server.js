@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var engine = require('./lib/engine.js');
 var Game = require('./lib/game.js').Game;
+var bot = require('./lib/bot.js');
 var shouldBroadcast = true;
 var games = { };
 
@@ -119,6 +120,9 @@ io.sockets.on('connection', function(socket) {
 setInterval(function() {
   for(var key in games) {
     var game = games[key];
+    var botAdded = bot.add(game);
+    var actionMade = bot.tick(game);
+    if(actionMade || botAdded) { setBroadcast(game); }
     var deathsOccurred = engine.tick(game);
     if(deathsOccurred) { setBroadcast(game); }
     broadcast(game);

@@ -4,6 +4,8 @@
   var backPedalX = 10;
   var kickDelta = 10;
   var downwardForce = 1;
+  var stageBoundary = { left: 0, right: 1280 };
+  stageBoundary.center = (stageBoundary.right + stageBoundary.left) / 2;
 
   function tick(player) {
     if(player.state == "dying") return;
@@ -36,4 +38,5 @@
   exports.kickDelta = 10;
   exports.tick = tick;
   exports.downwardForce = downwardForce;
+  exports.stageBoundary = stageBoundary;
 })();
