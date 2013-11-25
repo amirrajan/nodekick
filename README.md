@@ -5,7 +5,7 @@ Nodekick
 
 Nodekick is a realtime, multiplayer fighting game built using NodeJS, socket.io, and pixi.js.
 
-This codebase is a cleaned up version of what our team built for Node Knockout 2013. Out of 150 entries, we placed 15th overall and 6th in the "fun/utility" category.
+This codebase is a cleaned up version of what our team built for Node Knockout 2013. Out of 385 teams, we placed 15th overall and 6th in the "fun/utility" category.
 
 You can play online [here](http://nodekick.jit.su).
 
