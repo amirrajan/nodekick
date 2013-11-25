@@ -9,7 +9,6 @@ describe('adding a bot', function() {
     var player = game.addPlayer("player1");
     player.state = "standing";
     bot.add(game);
-    expect(game.players.length).toBe(3);
     expect(_.findWhere(game.players, { bot: true })).toNotBe(null);
     expect(_.findWhere(game.players, { bot: false })).toNotBe(null);
   });

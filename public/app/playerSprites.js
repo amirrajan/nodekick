@@ -9,7 +9,13 @@
 
   function playerTexture(playerId) {
     var player = app.game.getPlayer(playerId);
-    return app.assets.sprites.dive[player.direction][playerState(player)];
+    var rootSprite = app.assets.sprites.otherDive;
+
+    if(playerId == app.game.playerId()) {
+      rootSprite = app.assets.sprites.dive;
+    }
+
+    return rootSprite[player.direction][playerState(player)];
   }
 
   function playerState(player) {
