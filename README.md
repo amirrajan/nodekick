@@ -114,3 +114,37 @@ Open the app (same as opening it in the browser):
     heroku open
 
 And your app should be up on Heroku.
+
+##Signing up, and deploying to Clever Cloud
+
+[Clever Cloud](http://www.clever-cloud.com) promote http://nodejs-cloud.com/ and host lots of nodejs with websocket.
+
+###Documentation
+
+All the documentation about Clever Cloud node deploy is here : http://doc.clever-cloud.com/nodejs/
+
+You have nothing to install in your computer.
+
+Sign up via the website (no credit card required).
+
+Login into https://console.clever-cloud.com/ and register your public ssh key as mention here : http://doc.clever-cloud.com/admin-console/ssh-keys/
+
+Create a nodejs application.
+
+![demo create clever cloud app](http://i.imgur.com/kBCD71w.png)
+
+let default settings and create your app. 
+
+The console will show you a git remote repository to push your app. 
+
+![demo git repo clever cloud](http://i.imgur.com/lRzseIt.png)
+
+Go on your clone repository, and add remote :
+
+    git remote add clever <the_repo_url_get_from_console>
+
+Git deploy your app:
+
+    git push clever master
+
+And your app should be up on Clever Cloud.
