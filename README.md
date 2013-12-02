@@ -142,6 +142,15 @@ The console will show you a git remote repository to push your app.
 Go on your clone repository, and add remote :
 
     git remote add clever <the_repo_url_get_from_console>
+    
+You have to change the config.js file to listen on 8080 port :
+
+    // just change this value on the file
+    production: { port: 8080 }
+    
+Commit your change
+
+    git commit -am "port production change"
 
 Git deploy your app:
 
