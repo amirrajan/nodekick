@@ -156,4 +156,4 @@ Git deploy your app:
 
     git push clever master
 
-And your app should be up on Clever Cloud.
+And your app should be up on Clever Cloud. To get the temporary url for you application, click the `Domains` menu item after selecting your app from the `Apps` dropdown located at the top of the page. The url will be listed there.
