@@ -157,3 +157,5 @@ Git deploy your app:
     git push clever master
 
 And your app should be up on Clever Cloud. To get the temporary url for you application, click the `Domains` menu item after selecting your app from the `Apps` dropdown located at the top of the page. The url will be listed there.
+
+*I've deployed Nodekick to Azure's free instance, but the performance of the websockets was really poor. Not worth deploying there. If you've had a different experience, please let me know via an issue or pull request.*
