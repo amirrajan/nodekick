@@ -158,4 +158,44 @@ Git deploy your app:
 
 And your app should be up on Clever Cloud. To get the temporary url for you application, click the `Domains` menu item after selecting your app from the `Apps` dropdown located at the top of the page. The url will be listed there.
 
+##Signing up, and deploying to Azure
+
 *I've deployed Nodekick to Azure's free instance, but the performance of the websockets was really poor. Not worth deploying there. If you've had a different experience, please let me know via an issue or pull request.*
+
+If you really want to try Azure out, refer to these instructions:
+
+###Documentation
+
+From windowsazure.com, click Documentation, click Developer Center, click node.js, then click the Learn More button which will take you here:
+
+http://www.windowsazure.com/en-us/develop/nodejs/tutorials/create-a-website-(mac)/ (if you're on a Mac, looks like the link is contextual)
+
+Install the command line tools from here:
+
+http://www.windowsazure.com/en-us/downloads/#cmd-line-tools (on Windows, be sure to install the cross platform command line interface...not the powershell version)
+
+From the command line, first download your publish settings (this will redirect you to a website):
+
+    azure account download
+
+After the `.publishsettings` file is downloaded, you'll need to import it:
+
+    azure acount import %pathtofile%
+
+Next create the site, with a git backed repository:
+    
+    azure site create %uniquesitename% --git
+
+Deploy site:
+
+    git push azure master
+
+List of your websites:
+
+    azure site list
+
+And your app should be up on Azure.
+
+After your app is deployed. Go to the Azure control panel and under the `Configure` tab for your application, enable websockets and save.
+
+
