@@ -38,9 +38,9 @@ function getGame(gameId) {
   return games[gameId];
 }
 
-function input(direction, gameId, playerId) {
+function input(direction, gameId, playerId, playerName) {
   var game = getGame(gameId);
-  engine[direction](game, playerId);
+  engine[direction](game, playerId, playerName);
   setBroadcast(game);
 }
 
@@ -49,36 +49,24 @@ app.set('view engine', 'ejs');
 app.use('/bower_components', express.static('bower_components'));
 app.use('/public', express.static('public'));
 app.use('/common', express.static('common'));
+app.use(express.cookieParser());
+app.use(express.session({ secret: "nodekick" }));
 app.use(express.bodyParser());
 
 app.get('/', function(req, res) {
-  res.redirect('/game/public');
+  res.render('index');
 });
 
-app.post('/up', function(req, res) {
-  input("up", req.body.gameId, req.body.playerId);
-  res.end();
-});
-
-app.post('/left', function(req, res) {
-  input("left", req.body.gameId, req.body.playerId);
-  res.end();
-});
-
-app.post('/right', function(req, res) {
-  input("right", req.body.gameId, req.body.playerId);
-  res.end();
-});
-
-app.post('/down', function(req, res) {
-  input("down", req.body.gameId, req.body.playerId);
-  res.end();
+app.post('/join', function(req, res) {
+  var room = req.body.room;
+  if(!room) room = "public";
+  res.redirect("/game/" + room);
 });
 
 app.get("/game/:id", function(req, res) {
   getGame(req.params.id);
 
-  res.render('index', { ai: false });
+  res.render('game', { ai: false });
 });
 
 server.listen(process.env.PORT || config.port);
@@ -101,19 +89,20 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('up', function(data) {
-    input('up', data.gameId, data.playerId);
+    console.log(data);
+    input('up', data.gameId, data.playerId, data.playerName);
   });
 
   socket.on('down', function(data) {
-    input('down', data.gameId, data.playerId);
+    input('down', data.gameId, data.playerId, data.playerName);
   });
 
   socket.on('left', function(data) {
-    input('left', data.gameId, data.playerId);
+    input('left', data.gameId, data.playerId, data.playerName);
   });
 
   socket.on('right', function(data) {
-    input('right', data.gameId, data.playerId);
+    input('right', data.gameId, data.playerId, data.playerName);
   });
 });
 

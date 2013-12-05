@@ -5,44 +5,41 @@
     <title>nodekick</title>
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/pixi/bin/pixi.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/app/app.js"></script>
+    <script src="/common/gravity.js"></script>
+    <script src="/public/app/assets.js"></script>
+    <script src="/public/app/playerSprites.js"></script>
+    <script src="/public/app/deathAnimations.js"></script>
+    <script src="/public/app/drawer.js"></script>
+    <script src="/public/app/gameProxy.js"></script>
+    <script src="/public/app/gamepad.js"></script>
+    <script src="/public/app/notification.js"></script>
+    <script src="/public/app/ai.js"></script>
+    <script src="/public/app/index.js"></script>
     <script src="/public/jquery.cookie.js"></script>
+    <link href="/public/animate.css" rel="stylesheet" />
+    <link href="/public/game.css" rel="stylesheet" />
   </head>
   <body>
-    <script>
-      $(function() {
-        $("#join").click(function() {
-          $.cookie("name", $("#name").val());
-          $("form").submit();
-        });
-      });
-    </script>
     <div id="content" style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
-      <h1>Nodekick</h1>
-      <hr/>
-      <strong style="font-size: 20px">Join Game</strong>
-      <br/>
-      <br/>
-      <form method="post" action="/join">
-        <div style="padding: 5px">
-          Your Name: <br/>
-          <input type="input" id="name" name="name" placeholder="your name" style="font-size: 16px; width: 300px" /><br/>
-        </div>
-        <div style="padding: 5px">
-          Room: <br />
-          <input type="input" name="room" placeholder="leave blank for the public room" style="font-size: 16px; width: 300px" />
-        </div>
-        <input id="join" type="submit" value="join" style="margin: 5px; font-size: 16px;" />
-      </form>
+      <div id="stage" style="border: solid 1px silver; width: 100%; max-width: 1280px;">
+      </div>
       <div>
-        <h3>How to play (bring your friends)</h3>
+        <h3>Instructions for multiplayer fighting game (bring your friends)</h3>
         <ul>
-          <li>Join a game by entering your name and a room name (leave it blank to join the public room).</li>
           <li>Press the <strong>up arrow</strong> on your keyboard to <strong>spawn a fighter</strong>.</li>
           <li><strong>While standing</strong>, press the <strong>up arrow</strong> on your keyboard to <strong>to jump</strong>.</li>
           <li><strong>While in the air</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>attack left and right</strong>.</li>
           <li><strong>While standing</strong>, press the <strong>down arrow</strong> on your keyboard to <strong>jump backwards</strong>.</li>
           <li><strong>While standing</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>change the direction you are facing</strong>.</li>
         </ul>
+      </div>
+      <div>
+        <h3>Or Start a Bot (enter raw gist url to run a bot)</h3>
+        <input type="text" id="ai" style="width: 600px" />
+        <input type="button" id="loadScript" value="start bot" />
       </div>
       <div>
         <hr/>
@@ -55,5 +52,18 @@
           <br />
       </div>
     </div>
+    <script>
+      $(function() {
+        $("#ai").val("https://gist.github.com/amirrajan/7609280/raw");
+
+        $("#loadScript").click(function() {
+          $(".ai").remove();
+          var scriptToAppend = $('<script class="ai"><\/script>');
+          scriptToAppend.attr('src', $("#ai").val());
+          scriptToAppend.appendTo("#content");
+        });
+      });
+
+    </script>
   </body>
 </html>

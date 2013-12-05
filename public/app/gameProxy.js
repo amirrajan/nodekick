@@ -2,32 +2,29 @@
   var clock = 0;
   var socket = null;
   var playerId = null;
+  var playerName = null;
   var gameState = { players: [] };
   var gameId = _.last(window.location.href.split('/'));
   var socket = null;
 
   function up() {
     socket.emit('up', session());
-    //$.post("/up", session());
   }
 
   function left() {
     socket.emit('left', session());
-    //$.post("/left", session());
   }
 
   function right() {
     socket.emit('right', session());
-    //$.post("/right", session());
   }
 
   function down() {
     socket.emit('down', session());
-    //$.post("/down", session());
   }
 
   function session() {
-    return { playerId: playerId, gameId: gameId };
+    return { playerId: playerId, gameId: gameId, playerName: playerName };
   }
 
   function guid() {
@@ -48,6 +45,7 @@
   function init() {
     playerId = guid();
     socket = io.connect('/');
+    playerName = $.cookie("name") || "anonymous";
     socket.on('connect', function() {
       socket.emit('joinGame', session());
     });

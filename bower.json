@@ -4,7 +4,8 @@
     "jquery": "x",
     "underscore": "x",
     "pixi": "x",
-    "animate.css": "x"
+    "animate.css": "x",
+    "jquery.cookie": "x"
   },
   "version": "0.0.0"
 }
