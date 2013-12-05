@@ -44,6 +44,7 @@
 
   app.drawer = { };
   app.drawer.init = init;
+  app.drawer.stageHeight = stageHeight;
   app.drawer.stage = function() { return stage; };
   app.drawer.startDrawing = startDrawing;
 })();

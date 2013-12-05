@@ -15,11 +15,14 @@
     <script src="/public/app/drawer.js"></script>
     <script src="/public/app/gameProxy.js"></script>
     <script src="/public/app/gamepad.js"></script>
+    <script src="/public/app/notification.js"></script>
     <script src="/public/app/ai.js"></script>
     <script src="/public/app/index.js"></script>
+    <link href="/public/animate.css" rel="stylesheet" />
+    <link href="/public/game.css" rel="stylesheet" />
   </head>
   <body>
-    <div style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
+    <div id="content" style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
       <div id="stage" style="border: solid 1px silver; width: 100%; max-width: 1280px;">
       </div>
       <div>
@@ -56,7 +59,7 @@
           $(".ai").remove();
           var scriptToAppend = $('<script class="ai"><\/script>');
           scriptToAppend.attr('src', $("#ai").val());
-          scriptToAppend.appendTo("body");
+          scriptToAppend.appendTo("#content");
         });
       });
 

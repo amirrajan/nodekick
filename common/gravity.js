@@ -24,6 +24,7 @@
     if(player.y > 0) {
       player.y = 0;
       player.state = "standing";
+      player.falling = false;
     }
   }
 

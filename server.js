@@ -122,9 +122,16 @@ setInterval(function() {
     var game = games[key];
     var botAdded = bot.add(game);
     var actionMade = bot.tick(game);
-    if(actionMade || botAdded) { setBroadcast(game); }
-    var deathsOccurred = engine.tick(game);
-    if(deathsOccurred) { setBroadcast(game); }
+    if(actionMade || botAdded) setBroadcast(game); 
+    var tickResult = engine.tick(game);
+
+    _.each(tickResult.achievements, function(achievement) {
+      _.each(game.sockets, function(socket) {
+        socket.emit('notification', achievement);
+      });
+    });
+    
+    if(tickResult.deathsOccurred) setBroadcast(game);
     broadcast(game);
   }
 }, framesPerSecondInMilliseconds);

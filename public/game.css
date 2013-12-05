@@ -1,0 +1,15 @@
+.message {
+  color: #af111c;
+  font-family: impact;
+  font-size: 50px;
+  position: absolute;
+  text-align: center;
+  width: 300px;
+}
+
+.animated {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
