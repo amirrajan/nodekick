@@ -56,24 +56,51 @@
     });
 
     socket.on('notification', function(args) {
-      var messages = {
-        "deathfromabove": { me: "Bird of Prey", them: "Death from Above" },
-        "suicide": { me: "", them: "Idiot" },
-        "counter": { me: "Counter", them: "Denied" },
-        "headshot": { me: "Headshot", them: "Kicked in the Face" },
-        "killstreak-3": { me: "Kill Streak", them: "Lamb to the Slaughter" },
-        "killstreak-6": { me: "Rampage", them: "Lamb to the Slaughter" },
-        "killstreak-9": { me: "Dominating", them: "Lamb to the Slaughter" },
-        "killstreak-12": { me: "Unstoppable", them: "Lamb to the Slaughter" },
-        "killstreak-15": { me: "Godlike", them: "Lamb to the Slaughter" },
+      var notifications = {
+        "deathfromabove": {
+          me: { message: "Bird of Prey", sound: "deathfromabove-me" },
+          them: { message: "Death from Above", sound: "deathfromabove-them" }
+        },
+        "suicide": {
+          me: { message: "", sound: "" },
+          them: { message: "Idiot", sound: "suicide-them" }
+        },
+        "counter": {
+          me: { message: "Counter", sound: "counter-me" },
+          them: { message: "Denied", sound: "counter-them" }
+        },
+        "headshot": {
+          me: { message: "Headshot", sound: "headshot-me" },
+          them: { message: "Kicked in the Face", sound: "headshot-them" }
+        },
+        "killstreak-3": {
+          me: { message: "Killing Streak", sound: "killstreak-3" },
+          them: { message: "Lamb to the Slaughter", sound: "killstreak-them" }
+        },
+        "killstreak-6": {
+          me: { message: "Rampage", sound: "killstreak-6" },
+          them: { message: "Lamb to the Slaughter", sound: "killstreak-them" }
+        },
+        "killstreak-9": {
+          me: { message: "Dominating", sound: "killstreak-9" },
+          them: { message: "Lamb to the Slaughter", sound: "killstreak-them" }
+        },
+        "killstreak-12": {
+          me: { message: "Unstoppable", sound: "killstreak-12" },
+          them: { message: "Lamb to the Slaughter", sound: "killstreak-them" }
+        },
+        "killstreak-15": {
+          me: { message: "Godlike", sound: "killstreak-15" },
+          them: { message: "Lamb to the Slaughter", sound: "killstreak-them" }
+        },
       };
 
-      if(!messages[args.type]) return;
+      if(!notifications[args.type]) return;
 
       if(args.details.killer.id == playerId) {
-        app.notification.flash(messages[args.type].me);
+        app.notification.queue(notifications[args.type].me);
       } else if(args.details.killed.id == playerId) {
-        app.notification.flash(messages[args.type].them);
+        app.notification.queue(notifications[args.type].them);
       }
     });
 

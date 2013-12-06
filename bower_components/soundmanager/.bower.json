@@ -1,0 +1,13 @@
+{
+  "name": "soundmanager",
+  "homepage": "https://github.com/scottschiller/SoundManager2",
+  "_release": "V2.97a.20130512",
+  "_resolution": {
+    "type": "tag",
+    "tag": "V2.97a.20130512",
+    "commit": "0f9bdde4439e1683f78acbdf6ae75a7c6519f564"
+  },
+  "_source": "git://github.com/scottschiller/SoundManager2.git",
+  "_target": "V2.97a.20130512",
+  "_originalSource": "soundmanager"
+}

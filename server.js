@@ -89,7 +89,6 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('up', function(data) {
-    console.log(data);
     input('up', data.gameId, data.playerId, data.playerName);
   });
 

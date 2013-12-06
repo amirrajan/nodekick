@@ -42,7 +42,7 @@
     this.sprite = new PIXI.Sprite(playerTexture(this.id));
     var base = { font: "10pt Arial" };
 
-    if(app.game.me().id == this.id) {
+    if(app.game.me() && app.game.me().id == this.id) {
       base = {
         font: "10pt Arial",
         fill: "black",
