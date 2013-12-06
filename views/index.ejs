@@ -10,6 +10,8 @@
   <body>
     <script>
       $(function() {
+        $("#name").val($.cookie("name") || "anonymous");
+        
         $("#join").click(function() {
           $.cookie("name", $("#name").val());
           $("form").submit();
