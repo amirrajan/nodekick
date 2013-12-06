@@ -15,11 +15,13 @@
     app.ai.init();
     app.drawer.startDrawing();
     app.game.chatReceived = function(from, message) {
-      $("<div></div>").text(from + ": " + message).appendTo("#chatMessages");
+      $("<div></div>").text(from + ": " + message).prependTo("#chatMessages");
     };
 
     $(document).keydown(function(e) {
       if(e.keyCode == 13) {
+        if($("#chatMessage").val() == "") return;
+
         app.game.sendChat($("#chatMessage").val());
         $("#chatMessage").val('');
       }
