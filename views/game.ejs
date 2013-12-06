@@ -23,11 +23,11 @@
     <link href="/public/animate.css" rel="stylesheet" />
     <link href="/public/game.css" rel="stylesheet" />
   </head>
-  <body>
+  <body style="background-color: black; color: silver;">
     <div id="content" style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
-      <div id="stage" style="border: solid 1px silver; width: 100%; max-width: 1280px;">
+      <div id="stage" style="border: solid 1px Gray; width: 100%; max-width: 1280px;">
       </div>
-      <div style="float: left; width: 45%; border: solid 1px silver; margin-top: 10px; padding: 10px">
+      <div style="float: left; width: 45%; border: solid 1px Gray; margin-top: 10px; padding: 10px">
         <input type="text" id="chatMessage" style="width: 100%; font-size: 16px;" placeholder="chat: type message and press enter" />
         <div id="chatMessages" style="height: 300px; overflow: auto;">
 
@@ -53,6 +53,12 @@
     </div>
     <script>
       $(function() {
+        $("input").css({
+          "background-color": "black",
+          color: "#f5f5f5",
+          border: "solid 1px silver;"
+        });
+
         $("#ai").val("https://gist.github.com/amirrajan/7609280/raw");
 
         $("#loadScript").click(function() {

@@ -12,6 +12,11 @@
     $(window).resize(onResize);
 
     $("#stage").append(renderer.view);
+    var background = PIXI.Texture.fromImage("/public/images/background.png");
+    var sprite = new PIXI.Sprite(background);
+    sprite.position.x = 0;
+    sprite.position.y = -100;
+    stage.addChild(sprite);
     game = app.game;
   }
 

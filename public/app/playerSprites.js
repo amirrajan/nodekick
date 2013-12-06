@@ -40,14 +40,18 @@
   function PlayerSprite(playerId) {
     this.id = playerId;
     this.sprite = new PIXI.Sprite(playerTexture(this.id));
-    var base = { font: "10pt Arial" };
+    var base = {
+      font: "10pt Arial",
+      fill: "silver",
+      stroke: "silver"
+    };
 
     if(app.game.me() && app.game.me().id == this.id) {
       base = {
         font: "10pt Arial",
-        fill: "black",
-        stroke: "black",
-        strokeThickness: 1
+        strokeThickness: 1,
+        fill: "silver",
+        stroke: "silver"
       };
     }
 
