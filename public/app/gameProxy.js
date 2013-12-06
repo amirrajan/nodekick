@@ -34,6 +34,10 @@
     });
   }
 
+  function sendChat(message) {
+    socket.emit("sendchat", { session: session(), message: message });
+  }
+
   function getPlayer(playerId) {
     return _.findWhere(gameState.players, { id: playerId });
   }
@@ -53,6 +57,10 @@
     socket.on('gamestate', function(state) {
       gameState = state;
       applyGravity();
+    });
+
+    socket.on('receivechat', function(args) {
+      app.game.chatReceived(args.name, args.message);
     });
 
     socket.on('notification', function(args) {
@@ -119,6 +127,7 @@
   app.game.down = down;
   app.game.left = left;
   app.game.right = right;
+  app.game.sendChat = sendChat;
   app.game.getPlayer = getPlayer;
   app.game.clock = function() { return clock; };
   app.game.players = function() { return gameState.players; };

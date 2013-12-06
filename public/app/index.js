@@ -14,6 +14,16 @@
     app.playerSprites.init();
     app.ai.init();
     app.drawer.startDrawing();
+    app.game.chatReceived = function(from, message) {
+      $("<div></div>").text(from + ": " + message).appendTo("#chatMessages");
+    };
+
+    $(document).keydown(function(e) {
+      if(e.keyCode == 13) {
+        app.game.sendChat($("#chatMessage").val());
+        $("#chatMessage").val('');
+      }
+    });
   }
 
   $(init);

@@ -103,6 +103,15 @@ io.sockets.on('connection', function(socket) {
   socket.on('right', function(data) {
     input('right', data.gameId, data.playerId, data.playerName);
   });
+
+  socket.on('sendchat', function(data) {
+    _.each(getGame(data.session.gameId).sockets, function(s) {
+      s.emit('receivechat', {
+        name: data.session.playerName,
+        message: data.message
+      });
+    });
+  });
 });
 
 setInterval(function() {

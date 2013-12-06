@@ -27,20 +27,28 @@
     <div id="content" style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
       <div id="stage" style="border: solid 1px silver; width: 100%; max-width: 1280px;">
       </div>
-      <div>
-        <h3>Instructions for multiplayer fighting game (bring your friends)</h3>
-        <ul>
-          <li>Press the <strong>up arrow</strong> on your keyboard to <strong>spawn a fighter</strong>.</li>
-          <li><strong>While standing</strong>, press the <strong>up arrow</strong> on your keyboard to <strong>to jump</strong>.</li>
-          <li><strong>While in the air</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>attack left and right</strong>.</li>
-          <li><strong>While standing</strong>, press the <strong>down arrow</strong> on your keyboard to <strong>jump backwards</strong>.</li>
-          <li><strong>While standing</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>change the direction you are facing</strong>.</li>
-        </ul>
+      <div style="float: left; width: 45%; border: solid 1px silver; margin-top: 10px; padding: 10px">
+        <input type="text" id="chatMessage" style="width: 100%; font-size: 16px;" placeholder="chat: type message and press enter" />
+        <div id="chatMessages" style="height: 300px; overflow: auto;">
+
+        </div>
       </div>
-      <div>
-        <h3>Or Start a Bot (enter raw gist url to run a bot)</h3>
-        <input type="text" id="ai" style="width: 600px" />
-        <input type="button" id="loadScript" value="start bot" />
+      <div style="float: right; width: 40%">
+        <div>
+          <h3>Instructions for multiplayer fighting game (bring your friends)</h3>
+          <ul>
+            <li>Press the <strong>up arrow</strong> on your keyboard to <strong>spawn a fighter</strong>.</li>
+            <li><strong>While standing</strong>, press the <strong>up arrow</strong> on your keyboard to <strong>to jump</strong>.</li>
+            <li><strong>While in the air</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>attack left and right</strong>.</li>
+            <li><strong>While standing</strong>, press the <strong>down arrow</strong> on your keyboard to <strong>jump backwards</strong>.</li>
+            <li><strong>While standing</strong>, press the <strong>left or right arrow</strong> keys on your keyboard to <strong>change the direction you are facing</strong>.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Or Start a Bot (enter raw gist url to run a bot)</h3>
+          <input type="text" id="ai" style="width: 100%" />
+          <input type="button" id="loadScript" value="start bot" />
+        </div>
       </div>
     </div>
     <script>

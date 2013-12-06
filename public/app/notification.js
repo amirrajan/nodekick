@@ -22,6 +22,9 @@
       app.notification.sounds["killstreak-9"] = soundManager.createSound("killstreak-9", "/public/sounds/killstreak-9.mp3");
       app.notification.sounds["killstreak-12"] = soundManager.createSound("killstreak-12", "/public/sounds/killstreak-12.mp3");
       app.notification.sounds["killstreak-15"] = soundManager.createSound("killstreak-15", "/public/sounds/killstreak-15.mp3");
+    },
+    defaultOptions: {
+      volume: 25
     }
   });
 
