@@ -24,7 +24,7 @@
       app.notification.sounds["killstreak-15"] = soundManager.createSound("killstreak-15", "/public/sounds/killstreak-15.mp3");
     },
     defaultOptions: {
-      volume: 25
+      volume: 50
     }
   });
 

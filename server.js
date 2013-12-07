@@ -10,9 +10,7 @@ var bot = require('./lib/bot.js');
 var shouldBroadcast = true;
 var games = { };
 
-function setBroadcast(game) {
-  game.shouldBroadcast = true;
-}
+function setBroadcast(game) { game.shouldBroadcast = true; }
 
 function broadcast(game) {
   if(game.shouldBroadcast) {
@@ -26,6 +24,13 @@ function broadcast(game) {
 
     game.shouldBroadcast = false;
   }
+}
+
+function emit(gameId, message, args) {
+  var game = getGame[gameId];
+  _.each(game.sockets, function(socket) {
+    socket.emit(message, args);
+  });
 }
 
 function getGame(gameId) {
@@ -119,16 +124,18 @@ setInterval(function() {
     var game = games[key];
     var botAdded = bot.add(game);
     var actionMade = bot.tick(game);
-    if(actionMade || botAdded) setBroadcast(game); 
     var tickResult = engine.tick(game);
 
-    _.each(tickResult.achievements, function(achievement) {
+    if(tickResult.achievements.length > 0) {
       _.each(game.sockets, function(socket) {
-        socket.emit('notification', achievement);
+        socket.emit('achievement', tickResult.achievements);
       });
-    });
+    }
     
-    if(tickResult.deathsOccurred) setBroadcast(game);
+    if(actionMade || botAdded || tickResult.deathsOccurred) {
+      setBroadcast(game); 
+    }
+
     broadcast(game);
   }
 }, framesPerSecondInMilliseconds);
