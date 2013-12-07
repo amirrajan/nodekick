@@ -14,12 +14,10 @@ function setBroadcast(game) { game.shouldBroadcast = true; }
 
 function broadcast(game) {
   if(game.shouldBroadcast) {
-    _.each(game.sockets, function(socket) {
-      socket.emit('gamestate', {
-        frame: engine.frame(),
-        players: engine.players(game),
-        boxes: engine.boxes(),
-      });
+    emit(game.id, 'gamestate', {
+      frame: engine.frame(),
+      players: engine.players(game),
+      boxes: engine.boxes(),
     });
 
     game.shouldBroadcast = false;
@@ -27,7 +25,7 @@ function broadcast(game) {
 }
 
 function emit(gameId, message, args) {
-  var game = getGame[gameId];
+  var game = getGame(gameId);
   _.each(game.sockets, function(socket) {
     socket.emit(message, args);
   });
@@ -58,9 +56,7 @@ app.use(express.cookieParser());
 app.use(express.session({ secret: "nodekick" }));
 app.use(express.bodyParser());
 
-app.get('/', function(req, res) {
-  res.render('index');
-});
+app.get('/', function(req, res) { res.render('index'); });
 
 app.post('/join', function(req, res) {
   var room = req.body.room;
@@ -110,11 +106,9 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('sendchat', function(data) {
-    _.each(getGame(data.session.gameId).sockets, function(s) {
-      s.emit('receivechat', {
-        name: data.session.playerName,
-        message: data.message
-      });
+    emit(data.session.gameId, 'receivechat', {
+      name: data.session.playerName,
+      message: data.message
     });
   });
 });
@@ -125,15 +119,13 @@ setInterval(function() {
     var botAdded = bot.add(game);
     var actionMade = bot.tick(game);
     var tickResult = engine.tick(game);
-
-    if(tickResult.achievements.length > 0) {
-      _.each(game.sockets, function(socket) {
-        socket.emit('achievement', tickResult.achievements);
-      });
-    }
     
     if(actionMade || botAdded || tickResult.deathsOccurred) {
       setBroadcast(game); 
+    }
+
+    if(tickResult.achievements.length > 0) {
+      emit(game.id, 'achievement', tickResult.achievements);
     }
 
     broadcast(game);
