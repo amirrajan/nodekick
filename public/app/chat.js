@@ -10,7 +10,7 @@
     });
 
     app.game.chatReceived = function(from, message) {
-      $("<div></div>").text(from + ": " + message).prependTo("#chatMessages");
+      $("<div class='animated bounceIn'></div>").text(from + ": " + message).prependTo("#chatMessages");
     };
   }
 
