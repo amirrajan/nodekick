@@ -21,5 +21,8 @@ describe('player kills another', function() {
       state: "kicking",
       position: { footOverlaps: standingPlayer.head() }
     });
+
+    var result = engine.tick(game);
+    console.log(result);
   });
 });

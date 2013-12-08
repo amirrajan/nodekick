@@ -17,6 +17,10 @@
     sprite.position.x = 0;
     sprite.position.y = -100;
     stage.addChild(sprite);
+    setInterval(function() {
+      console.log("sprite count", stage.children.length);
+    }, 10000);
+
     game = app.game;
   }
 

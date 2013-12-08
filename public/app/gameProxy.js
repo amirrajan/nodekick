@@ -56,6 +56,7 @@
     });
 
     socket.on('gamestate', function(state) {
+      console.log("gamestate");
       gameState = state;
       if(me() && me().state == "dying") { 
         app.achievements.resetKillStreak();
@@ -64,10 +65,12 @@
     });
 
     socket.on('receivechat', function(args) {
+      console.log("receivechat");
       app.game.chatReceived(args.name, args.message);
     });
 
     socket.on('achievement', function(args) {
+      console.log("achievement");
       app.game.achievementsReceived(args);
     });
 
