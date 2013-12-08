@@ -45,7 +45,6 @@ function broadcast(game) {
   emit(game.id, 'gamestate', {
     frame: engine.frame(),
     players: engine.players(game),
-    boxes: engine.boxes(),
   });
 
   game.shouldBroadcast = false;

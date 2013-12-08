@@ -100,8 +100,8 @@ describe('hit boxes', function() {
     victim.direction = -1;
     victim.state = "standing";
 
-    var foot = attacker.foot(engine.boxes());
-    var bodyParts = victim.boxes(engine.boxes());
+    var foot = attacker.foot();
+    var bodyParts = victim.boxes();
     engine.tick(game);
     expect(victim.state).toBe('dying');
     expect(attacker.state).toBe('kicking');
