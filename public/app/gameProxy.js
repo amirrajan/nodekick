@@ -47,6 +47,7 @@
   }
 
   function init() {
+    app.achievements.resetKillStreak();
     playerId = guid();
     socket = io.connect('/');
     playerName = $.cookie("name") || "anonymous";
@@ -56,6 +57,9 @@
 
     socket.on('gamestate', function(state) {
       gameState = state;
+      if(me() && me().state == "dying") { 
+        app.achievements.resetKillStreak();
+      }
       applyGravity();
     });
 

@@ -38,6 +38,24 @@
     },
   };
 
+  var killStreak = 0;
+
+  function resetKillStreak() {
+    killStreak = 0;
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    $("#streakProgress").css({
+      width: ((killStreak/15) * 100).toString() + "%"
+    });
+  }
+
+  function incrementKillStreak() {
+    killStreak += 3;
+    updateProgressBar();
+  }
+
   function init() {
     app.game.achievementsReceived = achievementsReceived;
   }
@@ -52,6 +70,9 @@
 
       if(achievement.details.killer.id == playerId()) {
         app.notification.queue(notifications[achievement.type].me);
+        if(achievement.type.match(/killstreak/)) {
+          incrementKillStreak();
+        }
       } else if(achievement.details.killed.id == playerId()) {
         app.notification.queue(notifications[achievement.type].them);
       }
@@ -60,4 +81,5 @@
 
   app.achievements = { };
   app.achievements.init = init;
+  app.achievements.resetKillStreak = resetKillStreak;
 })();
