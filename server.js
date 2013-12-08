@@ -10,18 +10,44 @@ var bot = require('./lib/bot.js');
 var shouldBroadcast = true;
 var games = { };
 
+io.set('log level', 0);
+app.set('view engine', 'ejs');
+app.use('/bower_components', express.static('bower_components'));
+app.use('/public', express.static('public'));
+app.use('/common', express.static('common'));
+app.use(express.cookieParser());
+app.use(express.session({ secret: "nodekick" }));
+app.use(express.bodyParser());
+
+//http
+app.get('/', function(req, res) { res.render('index'); });
+
+app.post('/join', function(req, res) {
+  var room = req.body.room;
+  if(!room) room = "public";
+  res.redirect("/game/" + room);
+});
+
+app.get("/game/:id", function(req, res) {
+  getGame(req.params.id);
+  res.render('game');
+});
+
+server.listen(process.env.PORT || config.port);
+
+//sockets
 function setBroadcast(game) { game.shouldBroadcast = true; }
 
 function broadcast(game) {
-  if(game.shouldBroadcast) {
-    emit(game.id, 'gamestate', {
-      frame: engine.frame(),
-      players: engine.players(game),
-      boxes: engine.boxes(),
-    });
+  if(!game.shouldBroadcast) return;
 
-    game.shouldBroadcast = false;
-  }
+  emit(game.id, 'gamestate', {
+    frame: engine.frame(),
+    players: engine.players(game),
+    boxes: engine.boxes(),
+  });
+
+  game.shouldBroadcast = false;
 }
 
 function emit(gameId, message, args) {
@@ -33,8 +59,7 @@ function emit(gameId, message, args) {
 
 function getGame(gameId) {
   if(!games[gameId]) {
-    games[gameId] = new Game();
-    games[gameId].id = gameId;
+    games[gameId] = new Game(gameId);
     games[gameId].shouldBroadcast = true;
   }
 
@@ -46,34 +71,6 @@ function input(direction, gameId, playerId, playerName) {
   engine[direction](game, playerId, playerName);
   setBroadcast(game);
 }
-
-io.set('log level', 0);
-app.set('view engine', 'ejs');
-app.use('/bower_components', express.static('bower_components'));
-app.use('/public', express.static('public'));
-app.use('/common', express.static('common'));
-app.use(express.cookieParser());
-app.use(express.session({ secret: "nodekick" }));
-app.use(express.bodyParser());
-
-app.get('/', function(req, res) { res.render('index'); });
-
-app.post('/join', function(req, res) {
-  var room = req.body.room;
-  if(!room) room = "public";
-  res.redirect("/game/" + room);
-});
-
-app.get("/game/:id", function(req, res) {
-  getGame(req.params.id);
-
-  res.render('game', { ai: false });
-});
-
-server.listen(process.env.PORT || config.port);
-
-var fps = engine.fps;
-var framesPerSecondInMilliseconds = 1000.0 / fps;
 
 io.sockets.on('connection', function(socket) {
   socket.on('joinGame', function(data) {
@@ -112,6 +109,8 @@ io.sockets.on('connection', function(socket) {
     });
   });
 });
+
+var framesPerSecondInMilliseconds = 1000.0 / engine.fps;
 
 setInterval(function() {
   for(var key in games) {
