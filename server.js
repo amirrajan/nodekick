@@ -7,6 +7,7 @@ var io = require('socket.io').listen(server);
 var engine = require('./lib/engine.js');
 var Game = require('./lib/game.js').Game;
 var bot = require('./lib/bot.js');
+var achievements = require("./lib/achievements.js");
 var shouldBroadcast = true;
 var games = { };
 
@@ -110,6 +111,14 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
+function processAchievements(game, tickResult) {
+  var achievementsThisTick = achievements.get(tickResult.killResultsResults);
+
+  if(achievementsThisTick.lenth == 0) return;
+
+  emit(game.id, 'achievement', achievementsThisTick);
+}
+
 var framesPerSecondInMilliseconds = 1000.0 / engine.fps;
 
 setInterval(function() {
@@ -123,10 +132,8 @@ setInterval(function() {
       setBroadcast(game);
     }
 
-    if(tickResult.achievements.length > 0) {
-      emit(game.id, 'achievement', tickResult.achievements);
-    }
-
     broadcast(game);
+
+    processAchievements(game, tickResult);
   }
 }, framesPerSecondInMilliseconds);
