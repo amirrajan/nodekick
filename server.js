@@ -121,7 +121,7 @@ setInterval(function() {
     var tickResult = engine.tick(game);
     
     if(actionMade || botAdded || tickResult.deathsOccurred) {
-      setBroadcast(game); 
+      setBroadcast(game);
     }
 
     if(tickResult.achievements.length > 0) {

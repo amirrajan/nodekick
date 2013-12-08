@@ -29,7 +29,7 @@
     } else {
       $("canvas").css({ width: maxWidth, height: maxHeight });
     }
-  }     
+  }
 
   function startDrawing() {
     onResize();
