@@ -111,7 +111,7 @@ io.sockets.on('connection', function(socket) {
 });
 
 function processAchievements(game, tickResult) {
-  var achievementsThisTick = achievements.get(tickResult.killResultsResults);
+  var achievementsThisTick = achievements.get(tickResult.deaths);
 
   if(achievementsThisTick.length == 0) return;
 
