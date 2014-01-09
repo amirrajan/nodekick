@@ -282,7 +282,7 @@ You can log into boxes by using a key pair (as opposed to using a password). You
 
 We also want to create a security group for our NodeJS applications. This will also be associated with the instance we create.
 
-    aws ec2 create-security-group --group-name "nodeapps" --description "NodeJS Applicationsn"
+    aws ec2 create-security-group --group-name "nodeapps" --description "NodeJS Applications"
 
 Which will return something like:
 
@@ -294,7 +294,7 @@ Which will return something like:
 After we have the security group created, we need to set up ssh and http ports.
 
     aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
-    aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
+    aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 80 --cidr 0.0.0.0/0
 
 ##Creating an EC2 Instance
 
