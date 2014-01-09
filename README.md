@@ -204,9 +204,9 @@ After your app is deployed. Go to the Azure control panel and under the `Configu
 
 The deployment instructions thus far have been about deploying to PaaS. You can spin up your own linux box and deploy Nodekick (or any other NodeJS app for that matter). This is ofcourse a bit harder, but you'll have fine grained control over your box as opposed to being constrained to what PaaS provides.
 
-##Signing up and deploying to Amazone EC2
+##Signing up and deploying to Amazon EC2
 
-Sign up for Amazone AWS at http://aws.amazon.com/
+Sign up for Amazon AWS at http://aws.amazon.com/
 
 Take note of any Access and Secret Keys provided during the sign up process, you won't get another chance to look at these.
 
