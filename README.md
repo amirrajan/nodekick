@@ -13,7 +13,7 @@ You can play online [here](http://nodekick.jit.su).
 
 ##jump
 
-<img src="/ss_jump.png" />
+<img src="ss_jump.png" />
 
 ##attack
 
