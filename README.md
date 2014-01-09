@@ -403,6 +403,7 @@ Now that we have nginx configured, we can clone the Nodekick repo.
 
     cd ~/
     git clone https://github.com/amirrajan/nodekick.git
+    cd nodekick
     sudo npm install
 
 And start up the app using `forever` (this will keep the app running even if we log off).
