@@ -335,7 +335,7 @@ Once you've ssh'ed into the box. We'll use `apt-get` to install the programs nee
     sudo apt-get install openssl
     sudo apt-get install git
 
-With git installed, we can pull down npm and node. Run the following commands (the compilation will take a while).
+With git installed, we can pull down npm and node. Run the following commands (the compilation will take ~45 minutes).
 
     cd ~/
     git clone https://github.com/isaacs/npm.git
