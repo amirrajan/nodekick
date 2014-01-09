@@ -41,7 +41,7 @@ Run the app:
 
 Then navigate to `http://localhost:3000` (use chrome or firefox).
 
-#Deploy to Platfrom as a Service
+#Deploy to Platform as a Service
 
 ##Signing up, and deploying to Nodejitsu
 
@@ -271,3 +271,54 @@ You'll need to provide your Access Key, Secret Key, Region and Output Format. He
 A full region list can be found here: http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region
 
 You can go to https://console.aws.amazon.com/iam/home?#security_credential to see your security credentials, but the secret access key is only shown **once**. If you didn't write down your secret key, you can create a new one here.
+
+##Generating a Key Pair for SSH
+
+You can log into boxes by using a key pair (as opposed to using a password). You have to associate your key pair when you create the instances. So we'll set up the key pair first. The following command creates a key pair and saves the return value to a file (the data that is returned is important, and must be saved on creation).
+
+    aws ec2 create-key-pair --key-name nodeboxes --query 'KeyMaterial' --output text > nodeboxes.pem
+
+##Creating a Security Group for you NodeJS Apps
+
+We also want to create a security group for our NodeJS applications. This will also be associated with the instance we create.
+
+    aws ec2 create-security-group --group-name "nodeapps" --description "NodeJS Applicationsn"
+
+Which will return something like:
+
+    {
+        "return": "true",
+        "GroupId": "GROUPID"
+    }
+
+After we have the security group created, we need to set up ssh ports.
+
+    aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+##Creating an EC2 Instance
+
+You can run the `aws ec2 describe-images` command to see all images you have access to (it will take a while to return). I ended up going to the Create Instance page on the website to find the Ubuntu 13 micro instances I wanted to spin up. The rest of the instructions assume that you are using an Ubuntu 13 box.
+
+Here is the command that returns the Ubuntu 13 box I ended up cloning:
+
+    aws ec2 describe-images --filters Name=image-id,Values=ami-ad184ac4
+
+This page contains different filter options: http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeImages.html
+
+To create an ec2 instance for this image (and associate it with the key pair and security group we just created). Run the following command:
+
+    aws ec2 run-instances --image-id ami-ad184ac4 --count 1 --instance-type t1.micro --security-groups nodeapps --key-name nodeboxes
+
+You can then run `aws ec2 describe-instances` to get the public dns.
+
+With the dns information and the .pem file, you should be able to ssh into the box (git bash on Windows has an ssh client). Here is the command to log into the box. First we need to edit the permissions of the .pem file, then we should be able to log in.
+
+    chmod 600 ~/.aws/nodeboxes.pem
+    ssh-add ~/.aws/nodeboxes.pem
+    ssh ubuntu@PUBLICDNS
+
+If you mess up the creation of your instance, you can delete it using the following command:
+
+    aws ec2 terminate-instances --instance-ids INSTANCEID
+
+You can then run `aws ec2 describe-instances` to get the instance id.
