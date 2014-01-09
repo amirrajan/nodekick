@@ -356,7 +356,7 @@ then
 
     sudo service nginx start
 
-You'll now need to configure nginx. You'll need to us a text editor to do this (I use VIM).
+Now to configure nginx. You'll need to use a text editor to do this (I use VIM).
 
     sudo vim /etc/nginx/sites-enabled/default
 
