@@ -17,15 +17,15 @@ You can play online [here](http://nodekick.jit.su).
 
 ##attack
 
-<img src="/ss_attack.png" />
+<img src="ss_attack.png" />
 
 ##kill
 
-<img src="/ss_kill.png" />
+<img src="ss_kill.png" />
 
 ##victory
 
-<img src="/ss_victory.png" />
+<img src="ss_victory.png" />
 
 ##Run Locally
 
