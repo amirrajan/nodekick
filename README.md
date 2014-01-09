@@ -291,8 +291,9 @@ Which will return something like:
         "GroupId": "GROUPID"
     }
 
-After we have the security group created, we need to set up ssh ports.
+After we have the security group created, we need to set up ssh and http ports.
 
+    aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
     aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
 
 ##Creating an EC2 Instance
@@ -322,3 +323,93 @@ If you mess up the creation of your instance, you can delete it using the follow
     aws ec2 terminate-instances --instance-ids INSTANCEID
 
 You can then run `aws ec2 describe-instances` to get the instance id.
+
+##Setting up NodeJS on the EC2 Instance
+
+Once you've ssh'ed into the box. We'll use `apt-get` to install the programs needed to retrieve, compile and run NodeJS app.
+
+    sudo apt-get install nginx
+    sudo apt-get install gcc
+    sudo apt-get install g++
+    sudo apt-get install make
+    sudo apt-get install openssl
+    sudo apt-get install git
+
+With git installed, we can pull down npm and node. Run the following commands (the compilation will take a while).
+
+    cd ~/
+    git clone https://github.com/isaacs/npm.git
+    git clone git://github.com/joyent/node.git
+    cd ~/node/
+    git checkout v0.10.8
+    ./configure
+    make
+    sudo make install
+    cd ~/npm/
+    sudo make install
+
+Now lets start and configure nginx (it will act as a reverse proxy and send all requests on port 80 to node).
+
+    sudo update-rc.d nginx on
+
+then
+
+    sudo service nginx start
+
+You'll now need to configure nginx. You'll need to us a text editor to do this (I use VIM).
+
+    sudo vim /etc/nginx/sites-enabled/default
+
+Find `location / {…` and replace it like this:
+
+    upstream node {
+        server 127.0.0.1:3000;
+        keepalive 256; # not necessary
+    }
+
+    server {
+        listen 80;
+        server_name localhost; # domain of my site
+        access_log /var/log/nginx/localhost.access.log;
+        error_log /var/log/nginx/localhost.error.log;
+
+        large_client_header_buffers 8 32k;
+
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-NginX-Proxy true;
+
+            proxy_buffers 8 32k;
+            proxy_buffer_size 64k;
+
+            proxy_pass http://node;
+            proxy_redirect off;
+
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+
+            tcp_nodelay on; # not necessary
+        }
+     }
+
+Save the file, then restart nginx
+
+    sudo service nginx restart
+
+Now that we have nginx configured, we can clone the Nodekick repo.
+
+    cd ~/
+    git clone https://github.com/amirrajan/nodekick.git
+
+And start up the app using `forever` (this will keep the app running even if we log off).
+
+    sudo npm install forever -g
+
+Run the app
+
+    forever start --spinSleepTime 10000 server.js
+
+That's it! You should now be able to hit the public IP for your box and should be able to play Nodekick!
