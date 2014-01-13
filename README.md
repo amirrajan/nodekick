@@ -360,7 +360,7 @@ Now to configure nginx. You'll need to use a text editor to do this (I use VIM).
 
     sudo vim /etc/nginx/sites-enabled/default
 
-Find `location / {…` and replace it like this:
+Replace the contents of the file with the following:
 
     upstream node {
         server 127.0.0.1:3000;
