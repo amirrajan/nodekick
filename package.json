@@ -11,7 +11,7 @@
     "url": "git://github.com/amirrajan/nodekick.git"
   },
   "dependencies": {
-    "express": "x",
+    "express": "3.6.0",
     "ejs": "x",
     "socket.io": "x",
     "underscore": "x"
