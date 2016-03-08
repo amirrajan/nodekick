@@ -11,7 +11,7 @@ You can play online [here](http://node-kick.herokuapp.com).
 
 #Screenshots and Instruction to deploy your own Nodekick.
 
-<img src="nodekick.jpg" />
+<img src="nodekick.gif" />
 
 ##Run Locally
 
@@ -48,14 +48,6 @@ Create your heroku app:
 Git deploy your app:
 
     git push heroku master
-
-Assign a dyno to your app:
-
-    heroku ps:scale web=1
-
-Enable websockets (currently in beta):
-
-    heroku labs:enable websockets
 
 Open the app (same as opening it in the browser):
 
