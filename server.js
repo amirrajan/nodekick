@@ -119,15 +119,24 @@ function processAchievements(game, tickResult) {
 }
 
 var framesPerSecondInMilliseconds = 1000.0 / engine.fps;
+var syncRate = 0;
 
 setInterval(function() {
+  syncRate += 1;
+
   for(var key in games) {
     var game = games[key];
     var botAdded = bot.add(game);
     var actionMade = bot.tick(game);
     var tickResult = engine.tick(game);
-    
-    if(actionMade || botAdded || tickResult.deathsOccurred) {
+    var occasionallySync = (syncRate % 300) == 0;
+
+    if(occasionallySync) syncRate = 0;
+
+    if(actionMade ||
+       botAdded ||
+       tickResult.deathsOccurred ||
+       occasionallySync) {
       setBroadcast(game);
     }
 

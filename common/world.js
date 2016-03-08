@@ -1,9 +1,9 @@
 (function() {
-  var jumpPower = 25;
-  var backPedalY = 20;
-  var backPedalX = 10;
-  var kickDelta = 10;
-  var downwardForce = 1;
+  var jumpPower = 20;
+  var backPedalY = 15;
+  var backPedalX = 8;
+  var kickDelta = 8;
+  var downwardForce = 0.8;
   var stageBoundary = { left: 0, right: 1280 };
   var boxes = {
     playerHeight: 150,
@@ -92,7 +92,7 @@
   exports.jumpPower = jumpPower;
   exports.backPedalY = backPedalY;
   exports.backPedalX = backPedalX;
-  exports.kickDelta = 10;
+  exports.kickDelta = 8;
   exports.tick = tick;
   exports.downwardForce = downwardForce;
   exports.stageBoundary = stageBoundary;
