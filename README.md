@@ -57,7 +57,7 @@ And your app should be up on Heroku.
 
 #Deploy to Infrastructure as a Service
 
-The deployment instructions thus far have been about deploying to PaaS. You can spin up your own linux box and deploy Nodekick (or any other NodeJS app for that matter). This is ofcourse a bit harder, but you'll have fine grained control over your box as opposed to being constrained to what PaaS provides.
+The deployment instructions thus far have been about deploying to PaaS. You can spin up your own linux box and deploy Nodekick (or any other NodeJS app for that matter). This is of course a bit harder, but you'll have fine grained control over your box as opposed to being constrained to what PaaS provides.
 
 ##Signing up and deploying to Amazon EC2
 
@@ -73,7 +73,7 @@ After this, you'll want to install the Amazon CLI, instructions located here: ht
 
 ###Clutch
 
-I found that AWS CLI is open source. So I decided to be build it from source as opposed to installing it.
+I found that AWS CLI is open source. So I decided to build it from its source as opposed to installing it.
 
 First I cloned the repo
 
@@ -81,16 +81,22 @@ First I cloned the repo
 
 The source is written in Python. So you'll have to install that based on whatever OS you are running. Brew, apt-get flavors, and chocolatey all have a means to install Python.
 
-After cloning the repo, I checked out the latest tag (at this point it was `1.2.5`)
+After cloning the repo, I checked out the latest tag (at this point it was `1.11.35`)
 
-    git checkout tag 1.2.5
+    git checkout tags/1.11.35
 
 I then built and installed.
 
     python setup.py build
     python setup.py install
 
-Looking at the console output of the build showed that the files were copied to `build/scripts-2.7` (this may be different for your OS). Navigating to this directory, I then ran
+There is a good chance (especially if you are developing on a Mac), that the above commands would have also moved the generated exdcutable files to an appropriate location which is already referenced in your `$PATH` environment variable. Try running
+
+    aws help
+
+If you get an error saying that the command was not found, then you would need to manually ensure that the generated files are referenced in `$PATH`.
+
+Looking at the console output of the build, the files were copied to `build/scripts-2.7` (this may be different for your OS). Navigating to this directory, I then ran
 
     python aws
 
@@ -106,9 +112,9 @@ After you have updated your `.bashrc` or the Environment Variables (and have sou
 
 ##Configuring AWS CLI
 
-Based on the documentation located here: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+This section is based on the documentation located here: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
->The simplest way to use a configuration file with the AWS CLI is to name it config and place it in a folder named .aws in your home directory. On Windows, that would look like C:\Users\USERNAME\.aws\config. On Linux, OS X, or Unix, that is ~/.aws/config. The AWS CLI will automatically check this location for a configuration file.
+The simplest way to use a configuration file with the AWS CLI is to name it config and place it in a folder named .aws in your home directory. On Windows, that would look like C:\Users\USERNAME\.aws\config. On Linux, OS X, or Unix, that is ~/.aws/config. The AWS CLI will automatically check this location for a configuration file.
 
 Start by creating an empty configuration file.
 
