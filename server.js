@@ -2,6 +2,9 @@ var _ = require('underscore');
 var express = require('express');
 var config = require('./config.js').config;
 var app = express();
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var engine = require('./lib/engine.js');
@@ -11,14 +14,18 @@ var achievements = require("./lib/achievements.js");
 var shouldBroadcast = true;
 var games = { };
 
-io.set('log level', 0);
 app.set('view engine', 'ejs');
 app.use('/bower_components', express.static('bower_components'));
 app.use('/public', express.static('public'));
 app.use('/common', express.static('common'));
-app.use(express.cookieParser());
-app.use(express.session({ secret: "nodekick" }));
-app.use(express.bodyParser());
+app.use(cookieParser());
+app.use(session({ 
+  secret: "nodekick",
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //http
 app.get('/', function(req, res) { res.render('index'); });
