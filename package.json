@@ -19,8 +19,5 @@
     "socket.io": "x",
     "underscore": "x"
   },
-  "subdomain": "nodekick",
-  "engines": {
-    "node": "0.10.x"
-  }
+  "subdomain": "nodekick"
 }
