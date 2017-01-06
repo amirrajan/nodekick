@@ -11,13 +11,13 @@
     "url": "git://github.com/amirrajan/nodekick.git"
   },
   "dependencies": {
-    "express": "3.6.0",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "ejs": "x",
+    "express": "4.14.0",
+    "express-session": "^1.14.2",
     "socket.io": "x",
     "underscore": "x"
   },
-  "subdomain": "nodekick",
-  "engines": {
-    "node": "0.10.x"
-  }
+  "subdomain": "nodekick"
 }
