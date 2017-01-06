@@ -187,7 +187,7 @@ You can then run `aws ec2 describe-instances` to get the instance id.
 
 ##Setting up NodeJS on the EC2 Instance
 
-Once you've ssh'ed into the box. We'll use `apt-get` to install the programs needed to retrieve, compile and run NodeJS app.
+Once you've ssh'ed into the box. We'll use `apt-get` to install the programs needed to retrieve, compile and run our app.
 
     sudo apt-get install nginx
     sudo apt-get install gcc
@@ -196,18 +196,9 @@ Once you've ssh'ed into the box. We'll use `apt-get` to install the programs nee
     sudo apt-get install openssl
     sudo apt-get install git
 
-With git installed, we can pull down npm and node. Run the following commands (the compilation will take ~45 minutes).
+To install node and npm, we will use [nvm](https://github.com/creationix/nvm), which is a nice tool to manage, and have different versions of node co-exist on the same machine. Use the install script for the latest version found [here](https://github.com/creationix/nvm#install-script) (you may choose to precede the command with `sudo`). Then, install the latest version of node and npm:
 
-    cd ~/
-    git clone https://github.com/isaacs/npm.git
-    git clone git://github.com/joyent/node.git
-    cd ~/node/
-    git checkout v0.10.8
-    ./configure
-    make
-    sudo make install
-    cd ~/npm/
-    sudo make install
+    sudo nvm install node
 
 Now lets start and configure nginx (it will act as a reverse proxy and send all requests on port 80 to node).
 
