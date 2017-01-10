@@ -1,18 +1,21 @@
-var _ = require('underscore');
-var express = require('express');
-var config = require('./config.js').config;
-var app = express();
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-var engine = require('./lib/engine.js');
-var Game = require('./lib/game.js').Game;
-var bot = require('./lib/bot.js');
-var achievements = require("./lib/achievements.js");
-var shouldBroadcast = true;
-var games = { };
+import _ from 'underscore';
+import express from 'express';
+import {config} from './config.js';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import http from 'http';
+import socketIO from 'socket.io';
+import * as engine from './lib/engine.js';
+import {Game} from './lib/game.js';
+import * as bot from './lib/bot.js';
+import * as achievements from "./lib/achievements.js";
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIO.listen(server);
+const shouldBroadcast = true;
+const games = { };
 
 app.set('view engine', 'ejs');
 app.use('/bower_components', express.static('bower_components'));
@@ -28,16 +31,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //http
-app.get('/', function(req, res) { res.render('index'); });
+app.get('/', (req, res) => { res.render('index'); });
 
-app.post('/join', function(req, res) {
-  var room = req.body.room;
+app.post('/join', ({body}, res) => {
+  let room = body.room;
   if(!room) room = "public";
-  res.redirect("/game/" + room);
+  res.redirect(`/game/${room}`);
 });
 
-app.get("/game/:id", function(req, res) {
-  getGame(req.params.id);
+app.get("/game/:id", ({params}, res) => {
+  getGame(params.id);
   res.render('game');
 });
 
@@ -50,16 +53,16 @@ function broadcast(game) {
   if(!game.shouldBroadcast) return;
 
   emit(game.id, 'gamestate', {
-    frame: engine.frame(),
-    players: engine.players(game),
+    frame: engine.getFrame(),
+    players: engine.getPlayers(game),
   });
 
   game.shouldBroadcast = false;
 }
 
 function emit(gameId, message, args) {
-  var game = getGame(gameId);
-  _.each(game.sockets, function(socket) {
+  const game = getGame(gameId);
+  _.each(game.sockets, socket => {
     socket.emit(message, args);
   });
 }
@@ -74,42 +77,42 @@ function getGame(gameId) {
 }
 
 function input(direction, gameId, playerId, playerName) {
-  var game = getGame(gameId);
+  const game = getGame(gameId);
   engine[direction](game, playerId, playerName);
   setBroadcast(game);
 }
 
-io.sockets.on('connection', function(socket) {
-  socket.on('joinGame', function(data) {
-    var game = getGame(data.gameId);
+io.sockets.on('connection', socket => {
+  socket.on('joinGame', ({gameId}) => {
+    const game = getGame(gameId);
     socket.game = game;
     game.sockets.push(socket);
     setBroadcast(game);
   });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', () => {
     if(!socket.game) return;
 
     socket.game.sockets = _.without(socket.game.sockets, socket);
   });
 
-  socket.on('up', function(data) {
-    input('up', data.gameId, data.playerId, data.playerName);
+  socket.on('up', ({gameId, playerId, playerName}) => {
+    input('up', gameId, playerId, playerName);
   });
 
-  socket.on('down', function(data) {
-    input('down', data.gameId, data.playerId, data.playerName);
+  socket.on('down', ({gameId, playerId, playerName}) => {
+    input('down', gameId, playerId, playerName);
   });
 
-  socket.on('left', function(data) {
-    input('left', data.gameId, data.playerId, data.playerName);
+  socket.on('left', ({gameId, playerId, playerName}) => {
+    input('left', gameId, playerId, playerName);
   });
 
-  socket.on('right', function(data) {
-    input('right', data.gameId, data.playerId, data.playerName);
+  socket.on('right', ({gameId, playerId, playerName}) => {
+    input('right', gameId, playerId, playerName);
   });
 
-  socket.on('sendchat', function(data) {
+  socket.on('sendchat', data => {
     emit(data.session.gameId, 'receivechat', {
       name: data.session.playerName,
       message: data.message
@@ -117,26 +120,26 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-function processAchievements(game, tickResult) {
-  var achievementsThisTick = achievements.get(tickResult.deaths);
+function processAchievements({id}, {deaths}) {
+  const achievementsThisTick = achievements.get(deaths);
 
   if(achievementsThisTick.length == 0) return;
 
-  emit(game.id, 'achievement', achievementsThisTick);
+  emit(id, 'achievement', achievementsThisTick);
 }
 
-var framesPerSecondInMilliseconds = 1000.0 / engine.fps;
-var syncRate = 0;
+const framesPerSecondInMilliseconds = 1000.0 / engine.fps;
+let syncRate = 0;
 
-setInterval(function() {
+setInterval(() => {
   syncRate += 1;
 
-  for(var key in games) {
-    var game = games[key];
-    var botAdded = bot.add(game);
-    var actionMade = bot.tick(game);
-    var tickResult = engine.tick(game);
-    var occasionallySync = (syncRate % 300) == 0;
+  for(const key in games) {
+    const game = games[key];
+    const botAdded = bot.add(game);
+    const actionMade = bot.tick(game);
+    const tickResult = engine.tick(game);
+    const occasionallySync = (syncRate % 300) == 0;
 
     if(occasionallySync) syncRate = 0;
 
