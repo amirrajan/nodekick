@@ -1,11 +1,11 @@
-(function() {
-  var jumpPower = 20;
-  var backPedalY = 15;
-  var backPedalX = 8;
-  var kickDelta = 8;
-  var downwardForce = 0.8;
-  var stageBoundary = { left: 0, right: 1280 };
-  var boxes = {
+((() => {
+  const jumpPower = 20;
+  const backPedalY = 15;
+  const backPedalX = 8;
+  const kickDelta = 8;
+  const downwardForce = 0.8;
+  const stageBoundary = { left: 0, right: 1280 };
+  const boxes = {
     playerHeight: 150,
     playerCenter: 75.0/2.0,
     "1": {
@@ -96,4 +96,4 @@
   exports.tick = tick;
   exports.downwardForce = downwardForce;
   exports.stageBoundary = stageBoundary;
-})();
+}))();

@@ -23,7 +23,7 @@ Install all the dependencies:
 
 Run the app:
 
-    node server.js
+    npm start
 
 Then navigate to `http://localhost:3000` (use chrome or firefox).
 
@@ -264,6 +264,6 @@ And start up the app using `forever` (this will keep the app running even if we 
 
 Run the app
 
-    forever start --spinSleepTime 10000 server.js
+    forever start --spinSleepTime 10000 start.js
 
 That's it! You should now be able to hit the public IP for your box and should be able to play Nodekick!
