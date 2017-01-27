@@ -3,3 +3,4 @@ node_modules
 tags
 *.swp
 bower_components
+npm-debug.log

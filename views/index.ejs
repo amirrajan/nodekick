@@ -12,9 +12,15 @@
       $(function() {
         $("#name").val($.cookie("name") || "anonymous");
         
-        $("#join").click(function() {
-          $.cookie("name", $("#name").val());
-          $("form").submit();
+        $("#join").click(function(e) {
+          e.preventDefault();
+          let name = $("#name").val();
+          if(name.toLowerCase() == "bot") {
+            alert("Cannot use 'bot' as your name");
+          } else {            
+            $.cookie("name", name);
+            $("form").submit();
+          }
         });
       });
     </script>
