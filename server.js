@@ -10,12 +10,16 @@ import * as engine from './lib/engine.js';
 import {Game} from './lib/game.js';
 import * as bot from './lib/bot.js';
 import * as achievements from "./lib/achievements.js";
+import * as fs from 'fs';
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO.listen(server);
 const shouldBroadcast = true;
 const games = { };
+const logFile = 'latencyLog.csv';
+
+let latencyMeasurers = [];
 
 app.set('view engine', 'ejs');
 app.use('/bower_components', express.static('bower_components'));
@@ -118,6 +122,15 @@ io.sockets.on('connection', socket => {
       message: data.message
     });
   });
+
+  socket.on('pongpong', ({pingSentTime, pongSentTime}) => {
+    console.log('pong received');
+    latencyMeasurers.push({
+      pingSentTime,
+      pongSentTime,
+      pongReceivedTime: Date.now()
+    });
+  });
 });
 
 function processAchievements({id}, {deaths}) {
@@ -155,3 +168,36 @@ setInterval(() => {
     processAchievements(game, tickResult);
   }
 }, framesPerSecondInMilliseconds);
+
+// latency logging after every 10 seconds
+setInterval(() => {
+  // do we have anything to log
+  if (latencyMeasurers.length > 0) {
+    let clientCount = latencyMeasurers.length;
+    let latencySum = latencyMeasurers.reduce((acc, curr) => {
+      return acc + (curr.pongReceivedTime - curr.pingSentTime);
+    }, 0);
+
+    // we can now clear out latencyMeasurers
+    latencyMeasurers.length = 0;
+
+    // write log to file, and send pings again when done
+    let logLine = new Date(Date.now() - 10000).toUTCString() + ',' + clientCount + ',' + (latencySum / clientCount);
+    console.log(logLine);
+    fs.appendFile(logFile, logLine + '\n', (err) => {
+      if (err) throw err;
+      sendPings();
+    });
+  } else {  // if not, just send pings this time
+    sendPings();
+  }
+}, 10000);
+
+function sendPings() {
+  console.log('sending pings');
+  for (const gameId in games) {
+    emit(gameId, 'pingping', {
+      pingSentTime: Date.now()
+    });
+  }
+}

@@ -74,6 +74,14 @@
       app.game.achievementsReceived(args);
     });
 
+    socket.on('pingping', function(args) {
+      console.log('ping received');
+      socket.emit('pongpong', {
+        pingSentTime: args.pingSentTime,
+        pongSentTime: Date.now()
+      });
+    });
+
     setInterval(applyGravity, 1000.0 / 60.0);
   }
 
