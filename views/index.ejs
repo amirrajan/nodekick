@@ -15,12 +15,32 @@
         $("#join").click(function(e) {
           e.preventDefault();
           let name = $("#name").val();
+          let room = $("#room").val();
+          let maxNameLength = 15;
+          let maxRoomNameLength = 30;
+          
           if(name.toLowerCase() == "bot") {
-            alert("Cannot use 'bot' as your name");
-          } else {            
-            $.cookie("name", name);
-            $("form").submit();
+            return alert("Cannot use 'bot' as your name");
           }
+
+          if(name.length > maxNameLength) {
+            return alert("Name cannot be more than " + maxNameLength + " characters");
+          }
+
+          if(name.indexOf('\n') >= 0) {
+            name = name.split('\n').join('');
+          }
+
+          if(room.indexOf('\n') >= 0) {
+            room = room.split('\n').join('');
+          }
+
+          if(room.length > maxRoomNameLength) {
+            return alert("Room name cannot be more than " + maxRoomNameLength + " characters");
+          }
+
+          $.cookie("name", name);
+          $("form").submit();
         });
       });
     </script>
@@ -32,12 +52,12 @@
       <br/>
       <form method="post" action="/join">
         <div style="padding: 5px">
-          Your Name: <br/>
+          Your Name <small>(15 characters)</small>: <br/>
           <input type="input" id="name" name="name" placeholder="your name" style="font-size: 16px; width: 300px" /><br/>
         </div>
         <div style="padding: 5px">
-          Room: <br />
-          <input type="input" name="room" placeholder="leave blank for the public room" style="font-size: 16px; width: 300px" />
+          Room <small>(30 characters)</small>:<br />
+          <input type="input" id="room" name="room" placeholder="leave blank for the public room" style="font-size: 16px; width: 300px" />
         </div>
         <input id="join" type="submit" value="join" style="margin: 5px; font-size: 16px;" />
       </form>
