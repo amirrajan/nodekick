@@ -10,14 +10,14 @@ import * as engine from './lib/engine.js';
 import {Game} from './lib/game.js';
 import * as bot from './lib/bot.js';
 import * as achievements from "./lib/achievements.js";
-import * as fs from 'fs';
+import * as winston from 'winston';
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO.listen(server);
 const shouldBroadcast = true;
 const games = { };
-const logFile = 'latencyLog.csv';
+const logFile = 'latency.log';
 
 let latencyMeasurers = [];
 
@@ -124,7 +124,6 @@ io.sockets.on('connection', socket => {
   });
 
   socket.on('pongpong', ({pingSentTime, pongSentTime}) => {
-    console.log('pong received');
     latencyMeasurers.push({
       pingSentTime,
       pongSentTime,
@@ -169,32 +168,51 @@ setInterval(() => {
   }
 }, framesPerSecondInMilliseconds);
 
-// latency logging after every 10 seconds
-setInterval(() => {
-  // do we have anything to log
-  if (latencyMeasurers.length > 0) {
-    let clientCount = latencyMeasurers.length;
-    let latencySum = latencyMeasurers.reduce((acc, curr) => {
-      return acc + (curr.pongReceivedTime - curr.pingSentTime);
-    }, 0);
-
-    // we can now clear out latencyMeasurers
-    latencyMeasurers.length = 0;
-
-    // write log to file, and send pings again when done
-    let logLine = new Date(Date.now() - 10000).toUTCString() + ',' + clientCount + ',' + (latencySum / clientCount);
-    console.log(logLine);
-    fs.appendFile(logFile, logLine + '\n', (err) => {
-      if (err) throw err;
-      sendPings();
+// latency logging after every 10 seconds if environment variable set to 'true'
+(() => {
+  let shouldLog = process.env.SHOULD_LOG_LATENCY;
+  if (shouldLog === 'true') {
+    const logger = new (winston.Logger)({
+      transports: [
+        new (winston.transports.Console)({
+          formatter: function(options) {
+            return options.message;
+          }
+        }),
+        new (winston.transports.File)({
+          filename: logFile,
+          json: false,
+          formatter: function(options) {
+            return options.message;
+          }
+        })
+      ]
     });
-  } else {  // if not, just send pings this time
-    sendPings();
+    setInterval(() => {
+      // do we have anything to log
+      if (latencyMeasurers.length > 0) {
+        let clientCount = latencyMeasurers.length;
+        let latencySum = latencyMeasurers.reduce((acc, curr) => {
+          return acc + (curr.pongReceivedTime - curr.pingSentTime);
+        }, 0);
+
+        // we can now clear out latencyMeasurers
+        latencyMeasurers.length = 0;
+
+        // write log to file, and send pings again when done
+        let logObj = {
+          time: new Date(Date.now() - 10000).toUTCString(),
+          numberOfPlayers: clientCount,
+          averagePing: (latencySum / clientCount)
+        };
+        logger.info(JSON.stringify(logObj));
+      }
+      sendPings();
+    }, 10000);
   }
-}, 10000);
+})();
 
 function sendPings() {
-  console.log('sending pings');
   for (const gameId in games) {
     emit(gameId, 'pingping', {
       pingSentTime: Date.now()
