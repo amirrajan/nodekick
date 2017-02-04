@@ -123,11 +123,11 @@ io.sockets.on('connection', socket => {
     });
   });
 
-  socket.on('pongpong', ({pingSentTime, pongSentTime}) => {
+  socket.on('pongpong', ({gameId, gameTicksOnPing}) => {
     latencyMeasurers.push({
-      pingSentTime,
-      pongSentTime,
-      pongReceivedTime: Date.now()
+      gameId,
+      gameTicksOnPing,
+      gameTicksOnPong: games[gameId].tick
     });
   });
 });
@@ -193,7 +193,7 @@ setInterval(() => {
       if (latencyMeasurers.length > 0) {
         let clientCount = latencyMeasurers.length;
         let latencySum = latencyMeasurers.reduce((acc, curr) => {
-          return acc + (curr.pongReceivedTime - curr.pingSentTime);
+          return acc + (curr.gameTicksOnPong - curr.gameTicksOnPing);
         }, 0);
 
         // we can now clear out latencyMeasurers
@@ -215,7 +215,8 @@ setInterval(() => {
 function sendPings() {
   for (const gameId in games) {
     emit(gameId, 'pingping', {
-      pingSentTime: Date.now()
+      gameTicksOnPing: games[gameId].ticks,
+      gameId: gameId
     });
   }
 }

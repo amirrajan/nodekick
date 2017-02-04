@@ -77,10 +77,7 @@
     socket.on('pingping', function(args) {
       var pingTime = Date.now() - args.pingSentTime;
       console.log('ping from server received in ' + pingTime + ' ms');
-      socket.emit('pongpong', {
-        pingSentTime: args.pingSentTime,
-        pongSentTime: Date.now()
-      });
+      socket.emit('pongpong', args);
     });
 
     setInterval(applyGravity, 1000.0 / 60.0);
