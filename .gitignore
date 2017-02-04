@@ -4,3 +4,6 @@ tags
 *.swp
 bower_components
 npm-debug.log
+/.tern-port
+/lib/.tern-port
+/public/app/.tern-port
