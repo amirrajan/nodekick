@@ -127,7 +127,7 @@ io.sockets.on('connection', socket => {
     latencyMeasurers.push({
       gameId,
       gameTicksOnPing,
-      gameTicksOnPong: games[gameId].tick
+      gameTicksOnPong: games[gameId].ticks
     });
   });
 });
