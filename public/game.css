@@ -18,6 +18,7 @@
 }
 
 #chatMessages {
+  font-family: Arial;
   width: 100%;
   border: solid 1px Gray;
   margin-top: 10px;
@@ -25,11 +26,13 @@
 }
 
 #instructions {
+  font-family: Arial;
   float: right;
   width: 50%;
 }
 
 #chatMessage {
+  font-family: Arial;
   padding: 5px;
   border: solid 1px silver;
   font-size: 16px;
