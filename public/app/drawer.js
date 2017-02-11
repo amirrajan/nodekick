@@ -1,21 +1,21 @@
 (function() {
   var game = null;
-  var stageHeight = 500;
+  var stageHeight = 700;
   var stage, renderer = null;
   var sprites = { };
-  var maxWidth = 1280;
-  var maxHeight = 500;
+  var maxWidth = 2000;
+  var maxHeight = 700;
 
   function init() {
     stage = new PIXI.Stage(0xFFFFFF);
-    renderer = PIXI.autoDetectRenderer(1280, 500);
+    renderer = PIXI.autoDetectRenderer(2000, 700);
     $(window).resize(onResize);
 
     $("#stage").append(renderer.view);
     var background = PIXI.Texture.fromImage("/public/images/background.png");
     var sprite = new PIXI.Sprite(background);
     sprite.position.x = 0;
-    sprite.position.y = -100;
+    sprite.position.y = 0;
     stage.addChild(sprite);
     setInterval(function() {
       console.log("sprite count", stage.children.length);

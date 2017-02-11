@@ -28,8 +28,8 @@
     }
   });
 
-  var stageHeight = 500;
-  var maxWidth = 1280;
+  var stageHeight = 700;
+  var maxWidth = 2000;
   var notificationQueue = [];
 
   function popMessage() {
@@ -58,7 +58,7 @@
       }, 1000);
     }
   }
-  
+
   function queue(notification) {
     notificationQueue.push(notification);
   }
@@ -71,4 +71,3 @@
 
   app.notification.queue = queue;
 })();
-

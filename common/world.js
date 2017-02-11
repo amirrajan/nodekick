@@ -4,7 +4,7 @@
   const backPedalX = 8;
   const kickDelta = 8;
   const downwardForce = 0.8;
-  const stageBoundary = { left: 0, right: 1280 };
+  const stageBoundary = { left: 0, right: 2000 };
   const boxes = {
     playerHeight: 150,
     playerCenter: 75.0/2.0,

@@ -1,5 +1,5 @@
 (function() {
-  var stageHeight = 500;
+  var stageHeight = 700;
   var stage;
   var sprites = { };
 
@@ -41,15 +41,14 @@
     this.id = playerId;
     this.sprite = new PIXI.Sprite(playerTexture(this.id));
     var base = {
-      font: "10pt Arial",
+      font: "20pt Arial",
       fill: "silver",
       stroke: "silver"
     };
 
     if(app.game.me() && app.game.me().id == this.id) {
       base = {
-        font: "10pt Arial",
-        strokeThickness: 1,
+        font: "20pt Arial",
         fill: "silver",
         stroke: "silver"
       };
@@ -74,7 +73,7 @@
       this.name.position.x = player.x;
       this.name.position.y = player.y + stageHeight - 150;
 
-      if(player.state == "dying" && !this.dead) { 
+      if(player.state == "dying" && !this.dead) {
         this.dead = true;
         app.deathAnimations.queue(
           playerTexture(this.id),

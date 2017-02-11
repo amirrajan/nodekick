@@ -11,14 +11,14 @@
     <script>
       $(function() {
         $("#name").val($.cookie("name") || "anonymous");
-        
+
         $("#join").click(function(e) {
           e.preventDefault();
           let name = $("#name").val();
           let room = $("#room").val();
           let maxNameLength = 15;
           let maxRoomNameLength = 30;
-          
+
           if(name.toLowerCase() == "bot") {
             return alert("Cannot use 'bot' as your name");
           }
@@ -44,7 +44,7 @@
         });
       });
     </script>
-    <div id="content" style="width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto">
+    <div id="content" style="width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto">
       <h1>Nodekick</h1>
       <hr/>
       <strong style="font-size: 20px">Join Game</strong>
