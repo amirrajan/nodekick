@@ -13,8 +13,8 @@
     var results = [ ];
     var width = texture.frame.width;
     var height = texture.frame.height;
-    var rows = 20;
-    var columns = 10;
+    var rows = 5;
+    var columns = 5;
     var deltaX = width / columns;
     var deltaY = height / rows;
     _.times(rows, function(row) {
@@ -48,7 +48,7 @@
       deathCountdown: maxDeathCountdown
     };
 
-    deathQueue.push(animation); 
+    deathQueue.push(animation);
     _.each(animation.pieces, function(piece) { stage.addChild(piece.sprite); });
   }
 
@@ -95,5 +95,3 @@
   app.deathAnimations.queue = queue;
   app.deathAnimations.tick = tick;
 })();
-
-
