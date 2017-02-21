@@ -1,6 +1,5 @@
 (function() {
   var clock = 0;
-  var socket = null;
   var playerId = null;
   var playerName = null;
   var gameState = { players: [] };
@@ -55,28 +54,26 @@
       socket.emit('joinGame', session());
     });
 
+    app.game.socket = socket;
+
     socket.on('gamestate', function(state) {
-      console.log("gamestate");
       gameState = state;
-      if(me() && me().state == "dying") { 
+      if(me() && me().state == "dying") {
         app.achievements.resetKillStreak();
       }
       applyGravity();
     });
 
     socket.on('receivechat', function(args) {
-      console.log("receivechat");
       app.game.chatReceived(args.name, args.message);
     });
 
     socket.on('achievement', function(args) {
-      console.log("achievement");
       app.game.achievementsReceived(args);
     });
 
     socket.on('pingping', function(args) {
       var pingTime = Date.now() - args.pingSentTime;
-      console.log('ping from server received in ' + pingTime + ' ms');
       socket.emit('pongpong', {
         pingSentTime: args.pingSentTime,
         pongSentTime: Date.now()
