@@ -90,7 +90,7 @@ I then built and installed.
     python setup.py build
     python setup.py install
 
-There is a good chance (especially if you are developing on a Mac), that the above commands would have also moved the generated exdcutable files to an appropriate location which is already referenced in your `$PATH` environment variable. Try running
+There is a good chance (especially if you are developing on a Mac), that the above commands would have also moved the generated executable files to an appropriate location which is already referenced in your `$PATH` environment variable. Try running
 
     aws help
 
@@ -161,17 +161,17 @@ After we have the security group created, we need to set up ssh and http ports.
 
 You can run the `aws ec2 describe-images` command to see all images you have access to (it will take a while to return). I ended up going to the Create Instance page on the website to find the Ubuntu 13 micro instances I wanted to spin up. The rest of the instructions assume that you are using an Ubuntu 13 box.
 
-Here is the command that returns the Ubuntu 13 box I ended up cloning:
+Here is the command that returns the Ubuntu 14 box I ended up cloning:
 
+    aws ec2 describe-images help
     aws ec2 describe-images --filters Name=image-id,Values=ami-ad184ac4
-
-This page contains different filter options: http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeImages.html
+    aws ec2 describe-images --filters Name=name,Values="*Ubuntu*"
 
 To create an ec2 instance for this image (and associate it with the key pair and security group we just created). Run the following command:
 
-    aws ec2 run-instances --image-id ami-ad184ac4 --count 1 --instance-type t1.micro --security-groups nodeapps --key-name nodeboxes
+    aws ec2 run-instances --image-id ami-60f37908 --count 1 --instance-type t1.micro --security-groups nodeapps --key-name nodeboxes
 
-You can then run `aws ec2 describe-instances` to get the public dns.
+You can then run `aws ec2 describe-instances | grep PublicDnsName` to get the public dns.
 
 With the dns information and the .pem file, you should be able to ssh into the box (git bash on Windows has an ssh client). Here is the command to log into the box. First we need to edit the permissions of the .pem file, then we should be able to log in.
 
@@ -189,6 +189,7 @@ You can then run `aws ec2 describe-instances` to get the instance id.
 
 Once you've ssh'ed into the box. We'll use `apt-get` to install the programs needed to retrieve, compile and run our app.
 
+    sudo apt-get update
     sudo apt-get install nginx
     sudo apt-get install gcc
     sudo apt-get install g++
@@ -196,9 +197,15 @@ Once you've ssh'ed into the box. We'll use `apt-get` to install the programs nee
     sudo apt-get install openssl
     sudo apt-get install git
 
-To install node and npm, we will use [nvm](https://github.com/creationix/nvm), which is a nice tool to manage, and have different versions of node co-exist on the same machine. Use the install script for the latest version found [here](https://github.com/creationix/nvm#install-script) (you may choose to precede the command with `sudo`). Then, install the latest version of node and npm:
+To install node and npm, we will
+use [nvm](https://github.com/creationix/nvm), which is a nice tool to
+manage, and have different versions of node co-exist on the same
+machine. Use the install script for the latest version
+found [here](https://github.com/creationix/nvm#install-script) (you
+may choose to precede the command with `sudo`). Then, install the
+latest version of node and npm:
 
-    sudo nvm install node
+    nvm install node
 
 Now lets start and configure nginx (it will act as a reverse proxy and send all requests on port 80 to node).
 
@@ -256,14 +263,15 @@ Now that we have nginx configured, we can clone the Nodekick repo.
     cd ~/
     git clone https://github.com/amirrajan/nodekick.git
     cd nodekick
-    sudo npm install
+    npm install
 
 And start up the app using `forever` (this will keep the app running even if we log off).
 
-    sudo npm install forever -g
+    npm install forever -g
 
 Run the app
 
     forever start --spinSleepTime 10000 start.js
 
-That's it! You should now be able to hit the public IP for your box and should be able to play Nodekick!
+That's it! You should now be able to hit the public IP for your box
+and should be able to play Nodekick!
