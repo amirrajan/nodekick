@@ -26,7 +26,7 @@ app.use('/bower_components', express.static('bower_components'));
 app.use('/public', express.static('public'));
 app.use('/common', express.static('common'));
 app.use(cookieParser());
-app.use(session({ 
+app.use(session({
   secret: "nodekick",
   resave: true,
   saveUninitialized: true
@@ -92,6 +92,10 @@ io.sockets.on('connection', socket => {
     socket.game = game;
     game.sockets.push(socket);
     setBroadcast(game);
+  });
+
+  socket.on('client-ping', (args) => {
+    socket.emit('client-pong', args);
   });
 
   socket.on('disconnect', () => {
