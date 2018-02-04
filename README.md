@@ -24,7 +24,8 @@ brew upgrade node
 Clone the repo:
 
 ```
-git clone REPOURL
+git clone REPO_URL
+cd REPO_DIRECTORY
 ```
 
 Install all the dependencies:
