@@ -1,5 +1,4 @@
-Nodekick
-========
+# Nodekick
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License</a>.
 
@@ -7,19 +6,30 @@ Nodekick is a realtime, multiplayer fighting game built using NodeJS, socket.io,
 
 This codebase is a cleaned up version of what our team built for Node Knockout 2013. Out of 385 teams, we placed 15th overall and 6th in the "fun/utility" category.
 
-You can play online [here](http://node-kick.herokuapp.com).
-
-#Screenshots and Instruction to deploy your own Nodekick.
+# Screenshots and Instruction to deploy your own Nodekick.
 
 <img src="nodekick.gif" />
 
-##Run Locally
+## Run Locally
 
 **Due to the use of websockets (and time sensitive game events over those sockets), this game server will not perform well on a Windows machine (tested on Windows 7).**
 
+Install node:
+
+```
+brew install node
+brew upgrade node
+```
+
+Clone the repo:
+
+```
+git clone REPOURL
+```
+
 Install all the dependencies:
 
-    npm install (you may need to prefix this with sudo if you're on Mac)
+    npm install
 
 Run the app:
 
@@ -27,9 +37,9 @@ Run the app:
 
 Then navigate to `http://localhost:3000` (use chrome or firefox).
 
-##Signing up, and deploying to Heroku
+## Signing up, and deploying to Heroku
 
-###Documentation
+### Documentation
 
 From heroku.com, click Documentation, then click the Getting Started button, then click Node.js from the list of options on the left...which will take you here: https://devcenter.heroku.com/articles/nodejs
 
@@ -55,23 +65,23 @@ Open the app (same as opening it in the browser):
 
 And your app should be up on Heroku.
 
-#Deploy to Infrastructure as a Service
+# Deploy to Infrastructure as a Service
 
 The deployment instructions thus far have been about deploying to PaaS. You can spin up your own linux box and deploy Nodekick (or any other NodeJS app for that matter). This is of course a bit harder, but you'll have fine grained control over your box as opposed to being constrained to what PaaS provides.
 
-##Signing up and deploying to Amazon EC2
+## Signing up and deploying to Amazon EC2
 
 Sign up for Amazon AWS at http://aws.amazon.com/
 
 Take note of any Access and Secret Keys provided during the sign up process, you won't get another chance to look at these.
 
-##AWS CLI Installation
+## AWS CLI Installation
 
-###Automatic
+### Automatic
 
 After this, you'll want to install the Amazon CLI, instructions located here: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html
 
-###Clutch
+### Clutch
 
 I found that AWS CLI is open source. So I decided to build it from its source as opposed to installing it.
 
@@ -133,13 +143,13 @@ A full region list can be found here: http://docs.aws.amazon.com/general/latest/
 
 You can go to https://console.aws.amazon.com/iam/home?#security_credential to see your security credentials, but the secret access key is only shown **once**. If you didn't write down your secret key, you can create a new one here.
 
-##Generating a Key Pair for SSH
+## Generating a Key Pair for SSH
 
 You can log into boxes by using a key pair (as opposed to using a password). You have to associate your key pair when you create the instances. So we'll set up the key pair first. The following command creates a key pair and saves the return value to a file (the data that is returned is important, and must be saved on creation).
 
     aws ec2 create-key-pair --key-name nodeboxes --query 'KeyMaterial' --output text > nodeboxes.pem
 
-##Creating a Security Group for you NodeJS Apps
+## Creating a Security Group for you NodeJS Apps
 
 We also want to create a security group for our NodeJS applications. This will also be associated with the instance we create.
 
@@ -157,7 +167,7 @@ After we have the security group created, we need to set up ssh and http ports.
     aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 22 --cidr 0.0.0.0/0
     aws ec2 authorize-security-group-ingress --group-name nodeapps --protocol tcp --port 80 --cidr 0.0.0.0/0
 
-##Creating an EC2 Instance
+## Creating an EC2 Instance
 
 You can run the `aws ec2 describe-images` command to see all images you have access to (it will take a while to return). I ended up going to the Create Instance page on the website to find the Ubuntu 13 micro instances I wanted to spin up. The rest of the instructions assume that you are using an Ubuntu 13 box.
 
@@ -185,7 +195,7 @@ If you mess up the creation of your instance, you can delete it using the follow
 
 You can then run `aws ec2 describe-instances` to get the instance id.
 
-##Setting up NodeJS on the EC2 Instance
+## Setting up NodeJS on the EC2 Instance
 
 Once you've ssh'ed into the box. We'll use `apt-get` to install the programs needed to retrieve, compile and run our app.
 
